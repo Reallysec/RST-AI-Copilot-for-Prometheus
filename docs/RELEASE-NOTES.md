@@ -6,6 +6,13 @@ delivery archive is named after.
 
 ---
 
+## 0.1.1 — 2026-10-08
+
+- **Settings in `.env` now take effect**: the gateway in `docker-compose.prod.yml` reads `.env` as a whole
+  (`env_file`) in addition to the keys it lists. In 0.1.0, keys documented only in the deployment guide, such as
+  `RST_CONTENT_AUTO_APPLY` and `RST_DISCOVERY_INTERVAL_SECONDS`, were silently ignored. Works with every
+  Docker Compose v2; `RST_ENV_FILE` can point at another file.
+
 ## 0.1.0 — 2026-10-07
 
 First preview of RST AI Copilot for Prometheus, an AI copilot for network operations (switches, routers and

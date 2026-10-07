@@ -39,7 +39,7 @@ services:
     # Tag is installer-managed: rst-update.sh writes GATEWAY_IMAGE_TAG into .env
     # on a health-gated release install / rollback (P4). Default preserves the
     # pre-P4 behaviour when the var is unset.
-    image: rst-prometheus-ai-copilot-gateway:${GATEWAY_IMAGE_TAG:-0.1.0}
+    image: rst-prometheus-ai-copilot-gateway:${GATEWAY_IMAGE_TAG:-0.1.1}
     container_name: rst-prometheus-ai-copilot-gateway
     restart: unless-stopped
     # Resource ceiling so one runaway request / memory leak can't starve the
@@ -135,7 +135,7 @@ services:
       # Current running version — the heartbeat sends it, and the server only
       # offers a release/content pack newer than this. Keep in lockstep with
       # GATEWAY_IMAGE_TAG (rst-update.sh bumps the tag on install).
-      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-0.1.0}}
+      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-0.1.1}}
       # Vendor content/release signing PUBLIC key — content packs + online releases
       # verify against it fail-closed. OPTIONAL: leave unset and verification falls
       # back to the built-in license public key (fine until you ship dedicated-key
@@ -175,6 +175,14 @@ services:
       - RST_REPORT_CATCHUP_MAX=${RST_REPORT_CATCHUP_MAX:-}
       - RST_ALERT_INGEST_BUDGET_S=${RST_ALERT_INGEST_BUDGET_S:-}
       - RST_ALERT_WEBHOOK_SECRET=${RST_ALERT_WEBHOOK_SECRET:-}
+    # 上面逐条列的是发版契约（test_compose_env_passthrough.py 盯着）；没列的键
+    # （部署文档里的 RST_CONTENT_AUTO_APPLY、RST_DISCOVERY_INTERVAL_SECONDS 等）靠这一行
+    # 进容器。没有它，客户照文档写进 .env 也不生效，且不报错（compose 只把 .env 用于插值）。
+    # 列出的条目优先。不用 path/required 长写法：Compose 2.24 以前不认，老主机在线
+    # 升级会解析失败。deploy.sh 总会写 .env；e2e 不在仓库根目录放 .env，用
+    # RST_ENV_FILE 指向它自己的 env 文件（见 deploy/e2e/docker-compose.e2e.yml）。
+    env_file:
+      - ${RST_ENV_FILE:-.env}
     # 容器内不留多余权限：镜像的 entrypoint 会把进程降到 uid 10001（见
     # docker-entrypoint.sh），这里只保留它修正 state 卷属主和降权所需的几个
     # capability。不写 user: —— 老部署的 gateway_state 卷是 root 建的，直接钉死
