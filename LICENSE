@@ -1,0 +1,841 @@
+# RST AI Copilot for Prometheus — End User License Agreement
+
+Version 1.1 · Effective 2026-10-06
+
+This End User License Agreement (the "Agreement") is between Anhui Reallysec
+Information Technology Ltd. (安徽斯普朗克信息技术有限公司, "Reallysec") and the
+individual or entity that installs or uses the Software ("you"). If you accept
+this Agreement on behalf of an organization, you represent that you have the
+authority to bind that organization, and "you" refers to that organization.
+
+**How you accept.** You accept this Agreement by installing, activating, or
+using the Software. In addition, the Software asks each User, when they first
+sign in and again whenever the version of this Agreement changes, to confirm
+that they have read and agree to it, and a User who does not agree cannot use
+the Software. Where the Software has no individual user identity, an
+administrator accepts on behalf of the installation. If you do not agree, do
+not install or use the Software.
+
+**Please read the sections in bold with particular care. They limit Reallysec's
+warranties, indemnity and liability (Sections 9, 10 and 11), restrict how you
+may use the Software (Sections 3 and 14), and set out your responsibilities for
+Your Data and the destinations you send it to (Section 6), for AI-generated
+output, and for changes the Software makes in your Prometheus and Alertmanager
+at your direction (Section 9.3).**
+
+## 1. Definitions
+
+- **"Software"** means RST AI Copilot for Prometheus in object-code form as
+  delivered by Reallysec, including container images, deployment files,
+  compiled feature modules, documentation, content packs, and any updates
+  Reallysec provides. The Software is a network-operations assistant that reads
+  from the Prometheus, Alertmanager and Grafana systems you connect it to and,
+  at your direction, writes alert rules and silences to them.
+- **"Documentation"** means the user and installation guides Reallysec publishes
+  for the Software at https://reallysec.com/docs/prometheus-ai-copilot.
+- **"License"** means the license key or license file issued by Reallysec that
+  specifies your edition, feature set, node count, user count, and term.
+- **"Edition"** means the Community, Professional, or Enterprise edition, or a
+  trial. The Professional and Enterprise editions and trials are stated in your
+  License; the Community Edition is the Software used without a License.
+- **"Paid Edition"** means the Professional or Enterprise edition under a License
+  for which you have paid the applicable fees. A trial is not a Paid Edition.
+- **"Subscription Term"** means the term of a Paid Edition License stated in
+  your License or Order.
+- **"Node"** means one running installation of the Software, identified by its
+  installation identifier and host fingerprint.
+- **"User"** means an enabled user account in the Software. Disabled and deleted
+  accounts are not counted.
+- **"Order"** means the quotation, purchase order, or other document under which
+  you acquired the License.
+- **"Your Data"** means the metrics, alerts, alert rules, silences, device and
+  inventory records, configuration, and other data that the Software reads from
+  your Prometheus, Alertmanager and Grafana systems or otherwise processes on
+  your behalf.
+- **"Language-Model Provider"** means the provider of a language-model endpoint
+  that you configure in the Software, including a model you host yourself.
+- **"AI Output"** means queries, analyses, summaries, answers, proposed alert
+  rules, reports, and other content that the Software generates with a
+  language model.
+- **"Write Actions"** means changes the Software makes in your monitoring
+  systems when you or your users instruct it to: writing, changing or removing
+  alert rules in the rule files the Software manages and reloading Prometheus
+  so they take effect (after approval where the Software requires it), and
+  creating or expiring silences in Alertmanager.
+- **"Content Pack"** means a file signed by Reallysec that delivers prompts,
+  metric dictionaries, rule packs, runbooks and similar content to the Software
+  without a new release.
+
+## 2. License Grant
+
+Subject to this Agreement and payment of the applicable fees, Reallysec grants
+you a non-exclusive, non-transferable, non-sublicensable license, for the term
+stated in your License, to install and use the Software for your internal
+business operations, on no more Nodes and for no more Users than your License
+permits, and limited to the features of your Edition. Your employees and
+contractors may use the Software on your behalf; you are responsible for their
+compliance with this Agreement.
+
+You may run the Software on your own hardware or on infrastructure that you
+control and that a cloud or hosting provider operates on your behalf, provided
+the provider does not use the Software for its own purposes.
+
+A trial License grants the same rights for evaluation only, for the trial period
+stated in the License and for no more than ten (10) Users.
+
+Without a License, Reallysec grants you the same license free of charge and
+without a fixed term, limited to the features of the Community Edition, one
+User, and one Node. Reallysec may change the features of the Community Edition
+in later versions of the Software.
+
+## 3. Restrictions
+
+**You must not, and must not permit any third party to:**
+
+1. **move, change, disable, or circumvent the license key functionality, or
+   remove or obscure any functionality protected by the license key;**
+2. **decrypt, decompile, disassemble, or reverse engineer the compiled feature
+   modules or any other part of the Software, except to the extent applicable
+   law expressly permits despite this restriction;**
+3. **provide the Software to third parties as a hosted or managed service, or
+   otherwise give third parties access to a substantial set of its features;**
+4. **sell, rent, lease, lend, sublicense, distribute, or otherwise transfer the
+   Software or the License, except as Reallysec agrees in writing;**
+5. **share one License across more Nodes, Users, hosts, or organizations
+   than it permits;**
+6. **remove, alter, or obscure any copyright, trademark, license, or other
+   notice in the Software;**
+7. **use the Software in violation of applicable law, including the export
+   control, sanctions and data protection laws referred to in Sections 6 and
+   14.**
+
+## 4. Ownership
+
+The Software is licensed, not sold. Reallysec and its licensors retain all right,
+title, and interest in and to the Software, including all intellectual property
+rights. All rights not expressly granted in this Agreement are reserved.
+
+Reallysec claims no ownership of Your Data or of AI Output. Your use of AI
+Output is at your own risk under Section 9.3.
+
+If you provide suggestions or feedback about the Software, Reallysec may use them
+without restriction or obligation to you.
+
+## 5. Third-Party Components and Services
+
+The Software includes third-party and open-source components, listed in the
+THIRD-PARTY-NOTICES file delivered with the Software. Each is licensed under its
+own terms, which govern your use of that component. Nothing in this Agreement
+limits your rights under those licenses.
+
+Your Prometheus, Alertmanager and Grafana systems, your exporters, your
+Language-Model Providers, and the notification, document and audit-forwarding
+services you connect to the Software are not part of the Software. You obtain
+them under your own agreements with their providers. Reallysec does not control
+them and is not responsible for their availability, security, content, or
+handling of data you send to them.
+
+## 6. Data and Privacy
+
+### 6.1 Your Data
+
+The Software runs in your environment. Your Data stays under your control, and
+you are responsible for it, including under applicable data protection laws.
+Reallysec does not receive Your Data through the Software, except during
+support access under Section 6.6.
+
+### 6.2 What the Software sends outside your environment
+
+Apart from destinations you configure yourself (such as your Prometheus,
+Alertmanager and Grafana, Language-Model Providers, notification channels and
+audit-forwarding targets), the Software sends data outside your environment
+only as listed here:
+
+- **License service.** When a License is activated online, and afterwards about
+  once every twenty-four (24) hours while it remains active (retried about
+  every five minutes after a failed attempt), the Software sends Reallysec's
+  license service (license.reallysec.com) the license identifier, the product
+  identifier and version, a randomly generated installation identifier, the
+  host fingerprint (a hash derived from machine identifiers), a timestamp, and
+  a random one-time value used to verify the reply. When its license session
+  is due for renewal, the Software sends the license identifier, the product
+  identifier and version, and the host fingerprint. The license service's
+  replies also tell the Software whether the License has been revoked; the
+  Software makes no other request for this. Without a License, the Software
+  does not contact the license service. Offline activation, where your Edition
+  includes it, does not contact the license service.
+- **Verification-failure report.** If a downloaded release or Content Pack fails
+  signature or checksum verification on an installation with an online-activated
+  License, the Software sends the license service the license identifier, the
+  product identifier, the version concerned, if known, and the reason for the
+  failure.
+- **Update checks.** About once a day, and again when an administrator chooses
+  to download an update, the Software downloads public release and Content Pack
+  files from GitHub Releases, or from a mirror you configure. This applies to
+  every Edition, including the Community Edition. These requests send no
+  customer data beyond what any HTTP request carries. An installation activated
+  offline does not check for updates.
+- **Language models.** The Software sends prompts and query results, which may
+  include portions of Your Data, to the language-model and embedding endpoints
+  you configure, subject to the field masking settings you select, and to no
+  other destination. The Software has no built-in endpoint: until you configure
+  one, it sends nothing to any Language-Model Provider. Reallysec does not
+  receive that data.
+
+The license service also receives the IP address from which each request
+comes, as any internet service does. Nothing sent to Reallysec or to GitHub
+under this Section includes the contents of your metrics, alerts, alert rules
+or queries. Reallysec does not use Your Data to train language models.
+
+### 6.3 How Reallysec uses license-service data
+
+Reallysec uses the data in Section 6.2 that reaches its license service,
+including the IP address, only to activate and validate Licenses, to enforce
+the Node and User limits of your License, to detect tampered releases and
+Content Packs and misuse of Licenses, to verify usage under Section 8, and to
+provide support. Reallysec does not sell this data or use it for advertising.
+Reallysec keeps it while your License is active and for up to two (2) years
+after it ends, or longer only where the law requires, and then deletes or
+anonymizes it. Where any of this data is personal information, Reallysec
+handles it as described in its privacy notice at https://reallysec.com/privacy-policy.
+
+### 6.4 Language-Model Providers
+
+**Field masking matches known patterns and field names, such as IP addresses,
+host names and user names in metric labels. It reduces, but does not guarantee
+to remove, personal or sensitive information in what is sent to a
+Language-Model Provider. You choose the Language-Model Provider and the masking
+settings. You are responsible for your agreement with the Language-Model
+Provider, including whether it may retain your data or use it to train models,
+and for complying with the laws that apply to sending data to it, including
+personal information protection and cross-border data transfer rules.**
+
+### 6.5 Cross-border transfers
+
+**You decide where Your Data goes. If a Language-Model Provider, notification
+channel or other destination you configure is outside mainland China, you are
+responsible for any security assessment, standard contract, certification,
+consent or other requirement that applies to sending data to it.** Reallysec
+operates the license service and hosts it in the Hong Kong Special
+Administrative Region, outside mainland China, and GitHub
+Releases is operated by GitHub outside mainland China. Only the data listed in
+Section 6.2 is sent to them. An installation without a License or activated
+offline sends nothing to the license service, and an installation activated
+offline does not contact GitHub Releases.
+
+### 6.6 Support access
+
+Reallysec accesses your environment or Your Data only when you authorize it in
+advance for a specific support request, and only to the extent you authorize.
+In doing so Reallysec acts on your behalf as an entrusted party under Article 21
+of the Personal Information Protection Law of the People's Republic of China.
+Reallysec will process Your Data only to provide the support you requested and
+according to your instructions, will keep it confidential, will limit access to
+personnel bound by confidentiality obligations, and will not keep copies after
+the support is complete unless you agree. On request, Reallysec will sign a
+data processing agreement with you that sets out these obligations.
+
+## 7. License Checks, Updates, Support, and Preview Features
+
+**A paid or trial License is checked when it is activated and, for online
+activation, at each heartbeat under Section 6.2. If the License expires or is
+revoked, the features and User count beyond the Community Edition stop and the
+Software continues as the Community Edition. If the online checks of an
+online-activated License keep failing beyond the grace period described in the
+Documentation, the Software suspends its features, apart from signing in,
+license management, settings and viewing the records it already holds, until a
+check succeeds again; an administrator can instead deactivate the License and
+continue with the Community Edition. Your Data is not deleted.**
+
+Releases and Content Packs are signed by Reallysec, and the Software rejects
+any that fail signature or checksum verification. A new release is downloaded
+and installed only when an administrator chooses to. By default, a newer
+Content Pack found during an update check is applied automatically after it
+passes verification. An administrator can turn this off as described in the
+Documentation; newer Content Packs are then only stored, and an administrator
+chooses whether and when to activate one. An administrator can also return to
+an earlier Content Pack.
+
+Reallysec may provide updates during the term of your License, and for the
+Community Edition at its discretion. Support, service levels, and maintenance
+are provided only as set out in your Order or a separate support agreement.
+
+Features that the Software or the Documentation marks as preview, beta, or
+experimental are provided for evaluation. Reallysec may change or remove them
+at any time, and Sections 9.1 and 10 do not apply to them.
+
+## 8. Usage Verification
+
+**Self-certification.** At Reallysec's written request, no more than once in
+any twelve (12) month period, you will provide within thirty (30) days a
+written statement, signed by an authorized representative, of the number of
+Nodes on which the Software is installed, the number of Users, and the Edition
+in use. Reallysec may also rely on the activation records held by its license
+service.
+
+**Audit.** Reallysec, or an independent auditor bound by confidentiality
+obligations, may verify your use of the Software no more than once in any
+twelve (12) month period, on at least thirty (30) days' written notice, during
+your normal business hours, remotely where practicable, and in a way that does
+not unreasonably interfere with your business. Information obtained in an audit
+is used only to verify compliance with your License and is kept confidential.
+Reallysec bears the cost of the audit, unless it shows that you underpaid the
+fees due for the audited period by more than five percent (5%), in which case
+you will reimburse Reallysec's reasonable audit costs.
+
+If the verification shows use beyond your License, you will pay the applicable
+fees for the excess use under Reallysec's then-current price list.
+
+## 9. Warranty
+
+### 9.1 Limited warranty for Paid Editions
+
+Reallysec warrants that during the Subscription Term, the Software, as
+delivered by Reallysec, will perform materially in accordance with the
+Documentation. If it does not, and you notify Reallysec in writing with
+reasonable detail during the Subscription Term, Reallysec will repair or
+replace the Software. If Reallysec cannot do so within thirty (30) days of your
+notice, either party may terminate the affected License, and Reallysec will
+refund the fees you prepaid for the unused remainder of its Subscription Term.
+**This is your sole and exclusive remedy, and Reallysec's entire liability, for
+breach of this warranty.** The warranty does not apply to preview features, AI
+Output, third-party components and services, releases Reallysec no longer
+supports, or problems caused by modification, misuse, or an environment the
+Documentation does not support.
+
+### 9.2 Disclaimer
+
+**The Community Edition, trial Licenses and preview features are provided
+"as is", without any warranty. Except for Section 9.1, and to the maximum
+extent permitted by law, the Software is provided "as is" and "as available",
+without warranties of any kind, express or implied, including warranties of
+merchantability, fitness for a particular purpose, and non-infringement.
+Reallysec does not warrant that the Software will be error-free or
+uninterrupted, or that it will detect, prevent, or mitigate any network fault,
+outage, or security incident. The Software supports, and does not replace,
+your own monitoring, change management, and professional judgment.**
+
+### 9.3 AI Output and Write Actions
+
+**AI Output is generated by language models that Reallysec does not control. It
+may be incomplete or wrong, and the same input may produce different output.
+A qualified person must review AI Output, including any generated query,
+proposed alert rule, diagnosis or report, before you rely or act on it.**
+
+**Write Actions are taken only when a user you authorize instructs the Software
+to take them (for alert rules, after approval where the Software requires it).
+You decide which users may take them, you control the access you grant the
+Software to your Prometheus rule files and Alertmanager, and you are
+responsible for reviewing each alert rule and silence before you confirm it
+and for the effect of the changes you confirm on your monitoring and your
+network, including alerts that a silence or a changed rule suppresses.
+Reallysec recommends that you try new rules outside production first and keep
+backups of your Prometheus configuration.**
+
+## 10. Intellectual Property Indemnity (Paid Editions)
+
+**10.1 Defense and payment.** If a third party brings a claim against you
+alleging that the Software of a Paid Edition, as delivered by Reallysec and used
+in accordance with this Agreement and the Documentation, infringes that third
+party's patent, copyright or trademark or misappropriates its trade secret,
+Reallysec will defend you against the claim at its own expense and will pay the
+damages and costs finally awarded against you by a court or arbitral tribunal,
+or agreed in a settlement that Reallysec approves in writing.
+
+**10.2 Procedure.** Reallysec's obligations apply only if you (a) notify
+Reallysec in writing promptly enough that its defense is not prejudiced,
+(b) give Reallysec sole control of the defense and settlement of the claim, and
+(c) provide reasonable cooperation, at Reallysec's expense for your reasonable
+out-of-pocket costs. You may take part in the defense with your own counsel at
+your own expense. You may not settle the claim without Reallysec's prior written
+consent, and Reallysec will not, without your consent, agree to a settlement
+that requires you to admit fault or to do anything other than stop using the
+Software.
+
+**10.3 Remedies.** If the Software is, or in Reallysec's opinion is likely to
+be, held to infringe, Reallysec may at its option and expense (a) obtain the
+right for you to continue using it, (b) modify or replace it so that it no
+longer infringes without materially reducing its functionality, or (c) if
+neither is commercially reasonable, terminate the affected License and refund
+the fees you prepaid for the unused remainder of its Subscription Term.
+
+**10.4 Exclusions. Reallysec has no obligation under this Section for any claim
+to the extent it arises from: (a) the Community Edition, a trial License or
+preview features; (b) modification of the Software by anyone other than
+Reallysec; (c) combination of the Software with products, data, or processes
+not provided by Reallysec, where the claim would not have arisen without the
+combination; (d) AI Output, or the models and services of Language-Model
+Providers; (e) third-party and open-source components listed in the
+THIRD-PARTY-NOTICES file, or the third-party services described in Section 5;
+(f) Your Data or other materials you provide; (g) your continued use of the
+allegedly infringing Software after Reallysec has told you to stop or has
+provided a modification or update that would have avoided the claim; or
+(h) your use of the Software in breach of this Agreement.**
+
+**10.5 Limits. Reallysec's obligations under this Section are subject to the
+limit in Section 11.2. This Section states Reallysec's entire liability, and
+your exclusive remedy, for any claim that the Software infringes or
+misappropriates a third party's intellectual property rights.**
+
+## 11. Limitation of Liability
+
+**11.1 To the maximum extent permitted by law, Reallysec is not liable for any
+indirect, incidental, special, consequential, or punitive damages, or for any
+loss of profits, revenue, data, or business, even if advised of the possibility
+of such damages.**
+
+**11.2 To the maximum extent permitted by law, Reallysec's total cumulative
+liability arising out of or relating to this Agreement, under any theory of
+liability, will not exceed (a) for a Paid Edition, the fees you actually paid
+to Reallysec for the Software in the twelve (12) months before the event giving
+rise to the claim; and (b) for the Community Edition, a trial License, or
+preview features, the greater of those fees and RMB 50.**
+
+**11.3** Sections 11.1 and 11.2 do not limit or exclude Reallysec's liability
+for (a) death or personal injury; (b) property damage caused intentionally or
+by gross negligence; (c) fraud or wilful misconduct; or (d) any other liability
+that cannot be limited or excluded under applicable law, including Article 506
+of the Civil Code of the People's Republic of China.
+
+## 12. Term and Termination
+
+This Agreement takes effect when you first install or use the Software and
+continues until it is terminated. Reallysec may terminate this Agreement if you
+breach Section 3 or fail to pay applicable fees and do not cure the breach
+within thirty (30) days of notice, or with immediate effect where Section 14.3
+applies.
+
+When a License expires, the rights it grants beyond the Community Edition end,
+and you may continue to use the Software as the Community Edition under
+Section 2. A revoked License ends the same way.
+
+On termination you must stop using the Software and destroy all copies. You may,
+however, keep running the Software for up to thirty (30) days solely to export
+the records it holds, unless applicable law prohibits it or the termination
+results from your use of the Software in violation of law. Sections 3, 4, 6.6,
+8, 9.2, 9.3, 10, 11, 14, 15, and 16 survive termination.
+
+## 13. Changes to this Agreement
+
+Reallysec may update this Agreement. Each version of the Software is delivered
+with the Agreement that applies to it, and the version number and effective
+date appear at the top. When the version changes, the Software asks each User
+to accept the new version as described at the beginning of this Agreement. For
+a paid License, the Agreement in effect when your License term starts applies
+until that term ends, and an updated Agreement applies from your next renewal.
+For the Community Edition and trials, an updated Agreement applies when you
+install, or upgrade to, a version of the Software that includes it.
+
+## 14. Export Control and Sanctions
+
+**14.1 Compliance.** Each party will comply with the export control and
+economic sanctions laws that apply to it, to the Software, or to the
+transaction, including the Export Control Law of the People's Republic of China
+and, where they apply, the sanctions of the United Nations Security Council and
+the export control and sanctions laws of the European Union and the United
+States. You will not export, re-export, or transfer the Software, or give
+access to it, in violation of those laws. Nothing in this Section requires
+either party to act in a way that would violate the laws of the People's
+Republic of China.
+
+**14.2 Your representations. You represent that (a) you are not identified on,
+and are not owned or controlled by a person identified on, a restricted-party
+or sanctions list under the laws referred to in Section 14.1 that prohibits
+Reallysec from supplying the Software to you; and (b) you will not use the
+Software for an end use prohibited by those laws, including the development or
+production of weapons of mass destruction or their means of delivery. You will
+notify Reallysec promptly if either statement stops being true.**
+
+**14.3 Suspension.** If supplying the Software or a License to you would
+violate the laws referred to in Section 14.1, Reallysec may suspend or terminate
+your License without liability. Where the law permits, Reallysec will refund the
+fees you prepaid for the unused remainder of the Subscription Term.
+
+## 15. Governing Law and Disputes
+
+This Agreement is governed by the laws of the People's Republic of China,
+excluding its conflict-of-laws rules. The parties will first try to resolve any
+dispute arising out of or relating to this Agreement through good-faith
+negotiation. If negotiation fails, either party may submit the dispute to the
+Hefei Arbitration Commission for arbitration under its rules then in effect. The
+seat of arbitration is Hefei, Anhui Province, and the language of arbitration
+is Chinese. The award is final and binding on both parties.
+
+## 16. General
+
+- **Entire agreement.** This Agreement, together with your Order, is the entire
+  agreement between you and Reallysec regarding the Software and supersedes all
+  prior understandings. If your Order conflicts with this Agreement, the Order
+  prevails.
+- **Assignment.** You may not assign this Agreement or the License without
+  Reallysec's written consent, except to a successor to all or substantially all
+  of your business that agrees to this Agreement. Reallysec may assign this
+  Agreement to an affiliate or a successor to its business.
+- **Force majeure.** Neither party is liable for a delay or failure to perform,
+  other than a payment obligation, caused by events beyond its reasonable
+  control.
+- **Notices.** Notices to Reallysec go to the contact address in your Order or,
+  if none, to info@reallysec.com. Notices to you go to the contact details in
+  your Order or License.
+- **Severability and waiver.** If any provision is held unenforceable, the
+  remaining provisions remain in effect. Failure to enforce a provision is not a
+  waiver.
+- **Trademarks.** Prometheus® is a registered trademark of The Linux Foundation
+  in the United States and/or other countries. The Software is an independent
+  product and is not affiliated with, endorsed by, or sponsored by The Linux
+  Foundation or the Prometheus project. References to Prometheus identify the
+  platform the Software works with. Grafana and other names may be trademarks
+  of their respective owners.
+- **Language.** This Agreement is provided in Chinese and English. If the two
+  versions conflict, the Chinese version prevails.
+
+Contact: https://reallysec.com
+
+---
+
+# RST AI Copilot for Prometheus 最终用户许可协议
+
+版本 1.1 · 生效日期 2026-10-06
+
+本《最终用户许可协议》（「本协议」）由安徽斯普朗克信息技术有限公司（Anhui
+Reallysec Information Technology Ltd.，「版权人」）与安装或使用本软件的个人
+或单位（「您」）订立。您代表单位接受本协议的，即表示您有权代表该单位签约，
+「您」指该单位。
+
+**接受方式。** 您安装、激活或使用本软件，即表示接受本协议。此外，每位用户首次
+登录时，以及本协议版本变更后再次登录时，本软件均会请其确认已阅读并同意本协议；
+不同意的用户无法使用本软件。本软件没有单独用户身份时，由管理员代表该安装实例
+接受。如不同意，请勿安装或使用本软件。
+
+**请您特别注意本协议中以加粗方式标示的条款。这些条款限制版权人的担保、赔偿及
+责任（第九条、第十条、第十一条），限制您使用本软件的方式（第三条、第十四条），
+并规定您对您的数据及其发送目的地（第六条）、大模型生成内容以及本软件按您的指示
+在您的 Prometheus 和 Alertmanager 中所做变更（第九条第（三）款）应承担的责任。**
+
+## 一、定义
+
+- **「本软件」**：版权人以目标代码形式交付的 RST AI Copilot for Prometheus，包括
+  容器镜像、部署文件、编译后的功能模块、文档、内容包及版权人提供的任何更新。本软件
+  是一款网络运维助手，读取您所连接的 Prometheus、Alertmanager 和 Grafana 中的数据，
+  并可按您的指示向其写入告警规则和静默。
+- **「文档」**：版权人在 https://reallysec.com/docs/prometheus-ai-copilot 为本软件
+  发布的使用与安装指南。
+- **「许可」**：版权人签发的许可密钥或许可文件，其中载明您的版本、功能集、
+  节点数、用户数及期限。
+- **「版本」**：社区版、专业版、企业版或试用。专业版、企业版及试用以许可载明为准；
+  未使用许可时即为社区版。
+- **「付费版本」**：您已支付相应费用的许可项下的专业版或企业版。试用不属于付费
+  版本。
+- **「订阅期」**：您的许可或订单载明的付费版本许可期限。
+- **「节点」**：本软件的一个运行中的安装实例，以其安装标识及主机指纹识别。
+- **「用户」**：本软件中启用中的用户账号。已停用或已删除的账号不计入用户。
+- **「订单」**：您据以取得许可的报价单、采购订单或其他文件。
+- **「您的数据」**：本软件从您的 Prometheus、Alertmanager 和 Grafana 读取或以其他
+  方式代您处理的指标、告警、告警规则、静默、设备与台账记录、配置及其他数据。
+- **「大模型服务商」**：您在本软件中配置的大模型端点的提供方，包括您自行部署的
+  模型。
+- **「大模型生成内容」**：本软件借助大模型生成的查询、分析、摘要、回答、拟议告警
+  规则、报表及其他内容。
+- **「写入操作」**：本软件按您或您的用户的指示在您的监控系统中进行的变更：在本软件
+  管理的规则文件中写入、修改或移除告警规则并重新加载 Prometheus 使其生效（本软件要求
+  审批的，经审批后进行），以及在 Alertmanager 中创建或终止静默。
+- **「内容包」**：经版权人签名、无需发布新版本即可向本软件交付提示词、指标字典、
+  规则包、处置手册及类似内容的文件。
+
+## 二、许可授予
+
+在您遵守本协议并支付相应费用的前提下，版权人授予您一项非独占、不可转让、不可
+再许可的许可：在许可载明的期限内，为您的内部业务运营安装和使用本软件，节点数
+及用户数不超过许可允许的数量，功能以您的版本为限。您的员工及外包人员可代表您
+使用本软件，您对其遵守本协议的情况负责。
+
+您可以在自有硬件上运行本软件，也可以在由您控制、由云服务商或托管服务商代您运营
+的基础设施上运行本软件，但该服务商不得为其自身目的使用本软件。
+
+试用许可授予同等权利，但仅限于评估用途，期限以许可载明的试用期为准，用户数不超过
+十（10）个。
+
+未使用许可时，版权人免费、不定期限地授予您同等许可，但功能以社区版为限，用户数
+与节点数均为一。版权人可在本软件后续版本中调整社区版的功能。
+
+## 三、限制
+
+**您不得、亦不得允许任何第三方：**
+
+1. **移动、更改、禁用或规避许可密钥功能，或移除、遮蔽受许可密钥保护的任何
+   功能；**
+2. **对编译后的功能模块或本软件的任何其他部分进行解密、反编译、反汇编或反向工程，
+   但适用法律明确允许且不受本限制约束的除外；**
+3. **以托管服务或代管服务形式向第三方提供本软件，或以其他方式使第三方得以使用
+   本软件的主要功能；**
+4. **出售、出租、租赁、出借、再许可、分发或以其他方式转让本软件或许可，但经
+   版权人书面同意的除外；**
+5. **在超出许可允许范围的节点、用户、主机或组织之间共用同一许可；**
+6. **移除、更改或遮蔽本软件中的任何版权、商标、许可或其他声明；**
+7. **违反适用法律（包括第六条及第十四条所述的出口管制、制裁及数据保护法律）
+   使用本软件。**
+
+## 四、权利归属
+
+本软件系许可使用，而非出售。版权人及其许可方保留对本软件的一切权利、所有权及
+权益，包括全部知识产权。本协议未明确授予的一切权利均予保留。
+
+版权人不主张对您的数据或大模型生成内容的所有权。您使用大模型生成内容的风险依
+第九条第（三）款由您自行承担。
+
+您就本软件提出的建议或反馈，版权人可不受限制地使用，且不对您负有任何义务。
+
+## 五、第三方组件与服务
+
+本软件包含第三方及开源组件，清单见随本软件交付的 THIRD-PARTY-NOTICES 文件。
+各组件依据其各自的条款授权，您对该组件的使用受该条款约束。本协议不限制您在
+该等许可项下享有的权利。
+
+您的 Prometheus、Alertmanager 和 Grafana、各类采集器（exporter）、大模型服务商以及
+您接入本软件的通知、文档及审计转发服务均不属于本软件。您依据与其提供方之间的协议
+取得该等服务。版权人不控制该等服务，亦不对其可用性、安全性、内容或其对您所发送
+数据的处理负责。
+
+## 六、数据与隐私
+
+### （一）您的数据
+
+本软件运行于您的环境中。您的数据处于您的控制之下并由您负责，包括在适用的数据
+保护法律项下的责任。除依本条第（六）款进行支持访问外，版权人不通过本软件接收
+您的数据。
+
+### （二）本软件向您的环境之外发送的数据
+
+除您自行配置的目的地（例如您的 Prometheus、Alertmanager 和 Grafana、大模型服务商、
+通知渠道及审计转发目标）外，本软件仅在下列情形向您的环境之外发送数据：
+
+- **许可服务。** 在线激活许可时，以及此后许可有效期间大约每二十四（24）小时
+  一次（某次失败后大约每五分钟重试），本软件向版权人的许可服务
+  （license.reallysec.com）发送许可标识、产品标识及版本、随机生成的安装标识、主机
+  指纹（由机器标识生成的哈希值）、时间戳，以及用于校验答复的一次性随机值。许可会话
+  需要续期时，本软件发送许可标识、产品标识及版本和主机指纹。许可是否已被吊销，由
+  许可服务在上述答复中告知，本软件不为此另行发送请求。未使用许可时，本软件不联系
+  许可服务。您的版本包含离线激活时，离线激活不联系许可服务。
+- **校验失败报告。** 在线激活许可的安装实例下载的版本或内容包未通过签名或校验和
+  验证时，本软件向许可服务发送许可标识、产品标识、相关版本（如已知）及失败原因。
+- **更新检查。** 本软件大约每天一次，以及管理员选择下载更新时，从 GitHub Releases
+  或您配置的镜像下载公开的版本和内容包文件。所有版本（包括社区版）均如此。该等
+  请求除普通 HTTP 请求本身携带的信息外，不发送任何客户数据。离线激活的安装实例
+  不检查更新。
+- **大模型。** 本软件依据您选择的字段脱敏设置，将提示词和查询结果（可能包含您的
+  数据的一部分）发送至您配置的大模型及向量化端点，不发送至任何其他目的地。本软件
+  没有内置端点：在您配置之前，不向任何大模型服务商发送数据。版权人不接收该等数据。
+
+与任何互联网服务一样，许可服务也会收到每次请求的来源 IP 地址。依本条发送至
+版权人或 GitHub 的任何数据均不包含您的指标、告警、告警规则或查询的内容。版权人
+不使用您的数据训练大模型。
+
+### （三）版权人对许可服务数据的使用
+
+对于依本条第（二）款到达其许可服务的数据（包括 IP 地址），版权人仅用于激活和
+校验许可、执行许可的节点数及用户数限制、发现被篡改的版本和内容包以及许可的滥用、
+依第八条核验用量以及提供支持。版权人不出售该等数据，也不将其用于广告。版权人在
+您的许可有效期间及许可终止后至多两（2）年内保存该等数据，法律要求更长期限的除外，
+期满后予以删除或匿名化处理。该等数据中属于个人信息的部分，版权人按照其隐私政策
+（https://reallysec.com/privacy-policy）处理。
+
+### （四）大模型服务商
+
+**字段脱敏依据已知的模式和字段名进行匹配（例如指标标签中的 IP 地址、主机名和
+用户名），可以减少但不能保证完全去除发送给大模型服务商的内容中的个人信息或敏感
+信息。大模型服务商及脱敏设置由您选择。您对与大模型服务商之间的协议负责（包括其
+是否可以保留您的数据或将其用于训练模型），并负责遵守向其发送数据所适用的法律，
+包括个人信息保护及数据出境的相关规定。**
+
+### （五）数据出境
+
+**您的数据发送至何处由您决定。您配置的大模型服务商、通知渠道或其他目的地位于中国
+大陆境外的，向其发送数据所适用的安全评估、标准合同、认证、个人同意或其他要求，由您
+负责履行。** 许可服务由版权人运营，部署在中国香港特别行政区（中国大陆境外）；
+GitHub Releases 由 GitHub 在中国大陆境外运营。向其发送的数据仅限于本条第（二）款所列数据。未使用许可或离线激活
+的安装实例不向许可服务发送任何数据，离线激活的安装实例也不访问 GitHub Releases。
+
+### （六）支持访问
+
+版权人仅在您针对具体支持请求事先授权的情况下，并在您授权的范围内，访问您的环境
+或您的数据。此时版权人作为《中华人民共和国个人信息保护法》第二十一条所称的受托人
+代您处理数据：仅为提供您所请求的支持并按照您的指示处理您的数据，对其保密，仅允许
+负有保密义务的人员访问，并且在支持完成后不保留副本，但经您同意的除外。经您要求，
+版权人将与您签订载明上述义务的数据处理协议。
+
+## 七、许可校验、更新、支持与预览功能
+
+**付费许可或试用许可在激活时接受校验；在线激活的，此后还会在依第六条第（二）款
+进行的每次心跳时校验。许可到期或被吊销的，超出社区版的功能及用户数停止生效，本软件
+按社区版继续运行。在线激活的许可在线校验持续失败超过文档所述宽限期的，本软件暂停除
+登录、许可管理、设置及查看已保存记录以外的功能，直至校验再次成功；管理员也可以停用
+该许可，改按社区版继续使用。您的数据不会被删除。**
+
+版本和内容包均经版权人签名，未通过签名或校验和验证的，本软件予以拒绝。新版本仅在
+管理员选择时下载和安装。默认情况下，检查更新时发现的较新内容包通过验证后自动生效。
+管理员可按文档所述关闭此功能；关闭后较新的内容包仅被保存，由管理员决定是否以及
+何时启用。管理员也可以切换回较早的内容包。
+
+版权人可在许可期限内提供更新，并可自行决定为社区版提供更新。支持、服务水平及
+维护仅依据您的订单或单独的支持协议提供。
+
+本软件或文档标示为预览、测试或实验性质的功能仅供评估。版权人可随时变更或移除
+该等功能，第九条第（一）款及第十条不适用于该等功能。
+
+## 八、用量核验
+
+**自行申报。** 经版权人书面要求（每十二（12）个月不超过一次），您应在三十（30）
+日内提供经您授权代表签署的书面说明，载明本软件的安装节点数、用户数及所用版本。
+版权人亦可依据其许可服务保存的激活记录进行核验。
+
+**审计。** 版权人或负有保密义务的独立审计方可核验您对本软件的使用，每十二（12）
+个月不超过一次，应至少提前三十（30）日书面通知，在您的正常工作时间内进行，能远程
+进行的远程进行，且不得不合理地干扰您的业务。审计中获得的信息仅用于核验您是否遵守
+许可，并予以保密。审计费用由版权人承担；但审计显示您在被审计期间少付的费用超过
+应付费用百分之五（5%）的，您应向版权人偿付合理的审计费用。
+
+核验显示使用超出许可范围的，您应按版权人届时有效的价目表支付超出部分的费用。
+
+## 九、担保
+
+### （一）付费版本的有限担保
+
+版权人担保：在订阅期内，版权人交付的本软件在所有重大方面按照文档运行。如不相符，
+且您在订阅期内以书面形式向版权人发出载明合理细节的通知，版权人将修复或更换本软件。
+版权人自收到通知之日起三十（30）日内未能修复或更换的，任何一方均可终止相关许可，
+版权人将退还您已预付的该许可订阅期剩余部分的费用。**上述措施是您就违反本担保可
+获得的唯一救济，也是版权人就此承担的全部责任。** 本担保不适用于预览功能、大模型
+生成内容、第三方组件与服务、版权人已不再支持的版本，以及因修改、误用或在文档未
+支持的环境中运行而导致的问题。
+
+### （二）免责声明
+
+**社区版、试用许可及预览功能按「现状」提供，不附带任何担保。除本条第（一）款外，
+在法律允许的最大范围内，本软件按「现状」及「现有可用」提供，不附带任何明示或默示
+的担保，包括对适销性、特定用途适用性及不侵权的担保。版权人不保证本软件无错误、
+不中断，亦不保证其能够检测、阻止或缓解任何网络故障、服务中断或安全事件。本软件是
+您自身监控、变更管理及专业判断的辅助工具，不能替代之。**
+
+### （三）大模型生成内容与写入操作
+
+**大模型生成内容由版权人无法控制的大模型生成，可能不完整或不正确，相同输入也可能
+得到不同输出。对于大模型生成内容（包括任何生成的查询、拟议告警规则、诊断或报表），
+您须在依赖或据以采取行动前由具备相应能力的人员审核。**
+
+**写入操作仅在您授权的用户指示本软件执行时进行（告警规则在本软件要求审批时须经
+审批）。由您决定哪些用户可执行该等操作，并由您控制授予本软件的 Prometheus 规则文件
+及 Alertmanager 访问权限；您负责在确认前审核每一条告警规则和静默，并对您确认的变更
+给您的监控和网络造成的影响负责，包括静默或修改后的规则所抑制的告警。版权人建议您
+先在非生产环境中试行新规则，并备份您的 Prometheus 配置。**
+
+## 十、知识产权赔偿（付费版本）
+
+**（一）抗辩与赔付。** 第三方向您提出索赔，主张付费版本的本软件（以版权人交付的
+形式并按照本协议及文档使用）侵犯其专利权、著作权或商标权或者侵犯其商业秘密的，
+版权人将自费为您抗辩，并支付法院或仲裁庭终局裁判您应承担的赔偿及费用，或经版权人
+书面同意的和解中约定的金额。
+
+**（二）程序。** 版权人承担上述义务的前提是您：（1）及时书面通知版权人，使其抗辩
+不因迟延而受损；（2）由版权人全权控制该索赔的抗辩与和解；（3）提供合理配合，由此
+产生的合理实际支出由版权人承担。您可以自费委托律师参与抗辩。未经版权人事先书面
+同意，您不得就该索赔达成和解；未经您同意，版权人不得达成要求您承认过错或者要求您
+从事停止使用本软件以外的任何行为的和解。
+
+**（三）补救措施。** 本软件被认定或版权人认为可能被认定侵权的，版权人可自行选择
+并自费：（1）为您取得继续使用的权利；（2）修改或更换本软件，使其不再侵权且功能
+不受重大减损；或（3）上述两项在商业上均不合理可行的，终止相关许可，并退还您已
+预付的该许可订阅期剩余部分的费用。
+
+**（四）除外情形。对于索赔中因下列原因引起的部分，版权人不承担本条项下的义务：
+（1）社区版、试用许可或预览功能；（2）版权人以外的任何人对本软件的修改；（3）将本
+软件与非由版权人提供的产品、数据或流程结合使用，且如无该结合不会引起该索赔；
+（4）大模型生成内容，或大模型服务商的模型及服务；（5）THIRD-PARTY-NOTICES 文件
+所列的第三方及开源组件，或第五条所述的第三方服务；（6）您的数据或您提供的其他
+材料；（7）在版权人通知您停止使用、或已提供可避免该索赔的修改或更新后，您继续使用
+被指侵权的本软件；（8）您违反本协议使用本软件。**
+
+**（五）限额。版权人在本条项下的义务受第十一条第（二）款所述限额的限制。本条规定
+了版权人就本软件侵犯或侵占第三方知识产权的索赔所承担的全部责任，以及您就此可获得
+的唯一救济。**
+
+## 十一、责任限制
+
+**（一）在法律允许的最大范围内，对于任何间接的、附带的、特殊的、后果性的或惩罚性
+的损害，或任何利润、收入、数据或业务损失，版权人均不承担责任，即使已被告知该等
+损害的可能性。**
+
+**（二）在法律允许的最大范围内，版权人因本协议引起或与之相关的全部累计赔偿责任
+（无论基于何种法律理论）：（1）对于付费版本，不超过引起索赔的事件发生前十二（12）
+个月内您就本软件实际向版权人支付的费用总额；（2）对于社区版、试用许可或预览功能，
+不超过上述费用总额与人民币 50 元两者中的较高者。**
+
+**（三）** 本条第（一）款及第（二）款不限制或排除版权人的下列责任：（1）造成对方
+人身损害的责任；（2）因故意或者重大过失造成对方财产损失的责任；（3）欺诈或故意
+不当行为的责任；（4）依适用法律（包括《中华人民共和国民法典》第五百零六条）不得
+限制或排除的其他责任。
+
+## 十二、期限与终止
+
+本协议自您首次安装或使用本软件之时生效，持续至本协议终止。如您违反第三条或
+未支付相应费用，且在收到通知后三十（30）日内未予纠正，版权人可终止本协议；出现
+第十四条第（三）款所述情形的，版权人可立即终止本协议。
+
+许可到期后，该许可授予的超出社区版的权利随之终止，您可依第二条继续以社区版
+使用本软件。许可被吊销的，亦同。
+
+本协议终止后，您须停止使用本软件并销毁全部副本。但您可以在三十（30）日内仅为
+导出本软件保存的记录而继续运行本软件，适用法律禁止或者本协议因您违法使用本软件
+而终止的除外。第三条、第四条、第六条第（六）款、第八条、第九条第（二）款及
+第（三）款、第十条、第十一条、第十四条、第十五条及第十六条在本协议终止后继续有效。
+
+## 十三、协议变更
+
+版权人可更新本协议。本软件的每个版本均随附适用于该版本的协议，版本号及生效日期
+载于协议开头。协议版本变更时，本软件将按本协议开头所述方式请每位用户接受新版本。
+对于付费许可，许可期限开始时有效的协议适用至该期限届满，更新后的协议自您下次续订
+时起适用。对于社区版及试用，更新后的协议自您安装或升级至包含该协议的本软件版本时
+起适用。
+
+## 十四、出口管制与制裁
+
+**（一）合规。** 各方应遵守适用于其自身、本软件或相关交易的出口管制与经济制裁
+法律，包括《中华人民共和国出口管制法》，以及在适用的情况下联合国安理会的制裁措施
+和欧盟、美国的出口管制与制裁法律。您不得违反该等法律出口、再出口或转让本软件，或
+向他人提供本软件的访问。本条不要求任何一方从事违反中华人民共和国法律的行为。
+
+**（二）您的声明。您声明：（1）您未被列入、亦不受被列入以下名单的人员所有或控制：
+依本条第（一）款所述法律设立、禁止版权人向您提供本软件的限制方名单或制裁名单；
+（2）您不会将本软件用于该等法律禁止的最终用途，包括研制或生产大规模杀伤性武器
+及其运载工具。上述声明不再属实的，您应及时通知版权人。**
+
+**（三）暂停。** 向您提供本软件或许可将违反本条第（一）款所述法律的，版权人可
+暂停或终止您的许可，且不承担责任。在法律允许的情况下，版权人将退还您已预付的
+订阅期剩余部分的费用。
+
+## 十五、适用法律与争议解决
+
+本协议适用中华人民共和国法律（不含法律冲突规则）。因本协议引起的或与本协议
+有关的任何争议，双方应首先通过友好协商解决。协商不成的，任何一方均有权将争议
+提交至合肥仲裁委员会，按照其届时有效的仲裁规则进行仲裁。仲裁地点为安徽省合肥
+市，仲裁语言为中文。仲裁裁决为终局裁决，对双方均有约束力。
+
+## 十六、其他
+
+- **完整协议。** 本协议与您的订单共同构成您与版权人之间就本软件达成的完整
+  协议，并取代此前的一切约定。订单与本协议冲突的，以订单为准。
+- **转让。** 未经版权人书面同意，您不得转让本协议或许可，但转让给承继您全部
+  或实质全部业务并同意本协议的承继方的除外。版权人可将本协议转让给其关联方或
+  业务承继方。
+- **不可抗力。** 任何一方因超出其合理控制的事件导致迟延履行或不能履行的（付款
+  义务除外），不承担责任。
+- **通知。** 致版权人的通知发送至您订单载明的联系地址；订单未载明的，发送至
+  info@reallysec.com。致您的通知发送至您订单或许可载明的联系方式。
+- **可分割与弃权。** 任何条款被认定为不可执行的，不影响其余条款的效力。任何一
+  方未行使某项条款，不构成对该条款的放弃。
+- **商标。** Prometheus® 是 The Linux Foundation 在美国和/或其他国家的注册商标。
+  本软件是独立产品，与 The Linux Foundation 或 Prometheus 项目不存在隶属、认可或
+  赞助关系。本协议及本软件中提及 Prometheus 仅用于说明本软件所适配的平台。Grafana
+  及其他名称可能是其各自所有者的商标。
+- **语言。** 本协议以中英文两种文本提供，两种文本如有冲突，以中文文本为准。
+
+联系方式：https://reallysec.com

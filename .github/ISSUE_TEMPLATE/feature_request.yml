@@ -1,0 +1,46 @@
+name: Feature request
+description: Suggest an idea for RST AI Copilot for Prometheus
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement. Search the [existing issues](https://github.com/reallysec/RST-Prometheus-AI-Copilot/issues) first — someone may have proposed it already.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the situation and why the current behavior falls short.
+      placeholder: "When I triage alerts, I have to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: What would you like to happen?
+      description: Describe the outcome you want. Note anything explicitly out of scope.
+    validations:
+      required: true
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: How do you handle this today?
+      description: Current workarounds, if any.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Environment details, screenshots, or references to related issues.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/reallysec/RST-Prometheus-AI-Copilot/blob/main/CODE_OF_CONDUCT.md).
+          required: true

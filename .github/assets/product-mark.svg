@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>RST AI Copilot for Prometheus</title>
+  <!-- Product mark (2026-10-07): a flame drawn as five metric bars on a
+       Prometheus-orange tile. Source: docs/brand/ (README there). -->
+  <defs>
+    <linearGradient id="rpac-tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF8A5B"/>
+      <stop offset="1" stop-color="#C2391A"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#rpac-tile)"/>
+  <g fill="#FFFFFF">
+    <rect x="58" y="20.5" width="12" height="11" rx="5.5" fill-opacity=".55"/>
+    <rect x="48" y="38.5" width="32" height="11" rx="5.5" fill-opacity=".75"/>
+    <rect x="38" y="56.5" width="52" height="11" rx="5.5"/>
+    <rect x="34" y="74.5" width="60" height="11" rx="5.5"/>
+    <rect x="44" y="92.5" width="40" height="11" rx="5.5"/>
+  </g>
+</svg>

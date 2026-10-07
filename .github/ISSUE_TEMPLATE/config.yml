@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/reallysec/RST-Prometheus-AI-Copilot/security/policy
+    about: Do not report vulnerabilities in public issues. Follow the security policy.
+  - name: Documentation
+    url: https://reallysec.com/en/docs/prometheus-ai-copilot
+    about: Installation, configuration, and usage guides.
+  - name: Commercial editions and support
+    url: https://reallysec.com
+    about: Professional and Enterprise editions, licensing, and support.
