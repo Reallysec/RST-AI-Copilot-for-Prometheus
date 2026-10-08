@@ -6,6 +6,22 @@ delivery archive is named after.
 
 ---
 
+## 0.2.1 — 2026-10-08
+
+- **Investigation timelines show the right times**: the model now receives metric samples and the alert start as
+  readable times in the product timezone (`RST_TIMEZONE`) instead of raw Unix timestamps it sometimes converted wrong.
+- **Lost license-server contact falls back to Community**: when an online install has not reached the license
+  server for longer than the 3-day offline grace period, paid features pause and only one user can sign in, the
+  same as an expired license; free features keep working and everything returns once contact resumes. Before,
+  paid features kept running while queries were blocked. Offline licenses are not affected.
+- **Edition wording matches the product**: only AI rule generation needs Professional; writing, approving, writing
+  back and rolling back alert rules by hand is free, and the Alert rules menu no longer shows a lock. The reports
+  page as a whole needs Professional.
+- **Corrected hints**: the audit page explains that auditing is controlled by `RST_AUDIT_ENABLED` in `.env`; the
+  online update card names `./deploy/rst-update.sh`; investigation reports are titled "Alert investigation report"
+  and pushing a conclusion goes to every destination subscribed to findings.
+- **Smaller bundle**: vendor test and repository files (`deploy/e2e/`, `deploy/public-repo/`) are no longer shipped.
+
 ## 0.2.0 — 2026-10-08
 
 - **New names**: the repositories are now `Reallysec/RST-AI-Copilot-for-Prometheus` (public download) and

@@ -39,7 +39,7 @@ services:
     # Tag is installer-managed: rst-update.sh writes GATEWAY_IMAGE_TAG into .env
     # on a health-gated release install / rollback (P4). Default preserves the
     # pre-P4 behaviour when the var is unset.
-    image: rst-ai-copilot-for-prometheus-gateway:${GATEWAY_IMAGE_TAG:-0.2.0}
+    image: rst-ai-copilot-for-prometheus-gateway:${GATEWAY_IMAGE_TAG:-0.2.1}
     container_name: rst-ai-copilot-for-prometheus-gateway
     restart: unless-stopped
     # Resource ceiling so one runaway request / memory leak can't starve the
@@ -135,7 +135,7 @@ services:
       # Current running version — the heartbeat sends it, and the server only
       # offers a release/content pack newer than this. Keep in lockstep with
       # GATEWAY_IMAGE_TAG (rst-update.sh bumps the tag on install).
-      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-0.2.0}}
+      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-0.2.1}}
       # Vendor content/release signing PUBLIC key — content packs + online releases
       # verify against it fail-closed. OPTIONAL: leave unset and verification falls
       # back to the built-in license public key (fine until you ship dedicated-key

@@ -316,7 +316,9 @@ Changing it signs out every open session. With multiple accounts, admins reset o
 - **Reports** (`/v2/reports`): daily and weekly network operations reports covering the alert overview, top-utilised
   links, errors and discards, device availability, capacity risk and summaries of AI investigations. Generate on
   demand or on a schedule; the history is kept in PostgreSQL and can be exported.
-  Capacity risk: the Community edition lists the current utilization ranking only; Professional fits the trend over
+  The whole reports page is Professional (`reports`); Community sees it locked.
+  Capacity risk: without capacity forecast (`capacity_forecast`) in the license it lists the current utilization
+  ranking only; with it, it fits the trend over
   the report period (daily 1 day, weekly 7 days, monthly 30 days) and extrapolates it, and objects with less history
   than the fit window read "insufficient data" instead of a forecast.
 - A notification target has two independent switches, "Subscribe to AI findings" (investigation conclusions) and
