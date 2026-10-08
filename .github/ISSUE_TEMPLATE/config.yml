@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Report a security vulnerability
-    url: https://github.com/reallysec/RST-Prometheus-AI-Copilot/security/policy
+    url: https://github.com/reallysec/RST-AI-Copilot-for-Prometheus/security/policy
     about: Do not report vulnerabilities in public issues. Follow the security policy.
   - name: Documentation
     url: https://reallysec.com/en/docs/prometheus-ai-copilot

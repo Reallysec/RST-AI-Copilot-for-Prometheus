@@ -8,9 +8,9 @@ body:
       value: |
         Thanks for taking the time to report a bug.
 
-        **Before you submit:** search the [existing issues](https://github.com/reallysec/RST-Prometheus-AI-Copilot/issues) — duplicates are common.
+        **Before you submit:** search the [existing issues](https://github.com/reallysec/RST-AI-Copilot-for-Prometheus/issues) — duplicates are common.
 
-        **Reporting a security vulnerability?** Do not open an issue. [Follow the security policy](https://github.com/reallysec/RST-Prometheus-AI-Copilot/security/policy) instead.
+        **Reporting a security vulnerability?** Do not open an issue. [Follow the security policy](https://github.com/reallysec/RST-AI-Copilot-for-Prometheus/security/policy) instead.
 
   - type: textarea
     id: what-happened
@@ -97,5 +97,5 @@ body:
     attributes:
       label: Code of Conduct
       options:
-        - label: I agree to follow this project's [Code of Conduct](https://github.com/reallysec/RST-Prometheus-AI-Copilot/blob/main/CODE_OF_CONDUCT.md).
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/reallysec/RST-AI-Copilot-for-Prometheus/blob/main/CODE_OF_CONDUCT.md).
           required: true

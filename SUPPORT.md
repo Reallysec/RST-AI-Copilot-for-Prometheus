@@ -3,7 +3,7 @@
 ## How to file issues and get help
 
 This project uses GitHub Issues to track bugs and feature requests. Search the
-[existing issues](https://github.com/reallysec/RST-Prometheus-AI-Copilot/issues)
+[existing issues](https://github.com/reallysec/RST-AI-Copilot-for-Prometheus/issues)
 before filing a new one to avoid duplicates. For new issues, file your bug or
 feature request as a new issue using the provided templates.
 

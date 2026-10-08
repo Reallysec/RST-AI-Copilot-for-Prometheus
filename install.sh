@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-command installer for RST AI Copilot for Prometheus.
 #
-#   curl -fsSL https://github.com/reallysec/RST-Prometheus-AI-Copilot/releases/latest/download/install.sh | sudo bash
+#   curl -fsSL https://github.com/reallysec/RST-AI-Copilot-for-Prometheus/releases/latest/download/install.sh | sudo bash
 #
 # Options: --version <x.y.z> (default: the newest signed release)   --dir <path> (default below)
 #          --mirror github|cn   github: GitHub Releases only; cn: China mirror (Tencent COS) first,
@@ -21,7 +21,7 @@ set -euo pipefail
 
 PRODUCT="RST AI Copilot for Prometheus"
 STEM="RST-Prometheus-AI-Copilot"                     # archive: <STEM>-<version>.tar.gz
-GH_REPO="reallysec/RST-Prometheus-AI-Copilot"
+GH_REPO="reallysec/RST-AI-Copilot-for-Prometheus"
 DIR="/opt/rst-prometheus-ai-copilot"
 # China mirror (Tencent COS): <base>/rst-prometheus-ai-copilot/<version>/<file> and .../latest/VERSION.
 # The bucket does not exist yet — this default is a PLACEHOLDER. Until it is replaced (or
