@@ -38,9 +38,9 @@
 拿到交付包后：
 
 ```bash
-sha256sum -c RST-Prometheus-AI-Copilot-<版本>.tar.gz.sha256
-tar xzf RST-Prometheus-AI-Copilot-<版本>.tar.gz
-cd RST-Prometheus-AI-Copilot-<版本> && ./deploy.sh
+sha256sum -c RST-AI-Copilot-for-Prometheus-<版本>.tar.gz.sha256
+tar xzf RST-AI-Copilot-for-Prometheus-<版本>.tar.gz
+cd RST-AI-Copilot-for-Prometheus-<版本> && ./deploy.sh
 ```
 
 `deploy.sh` 加载镜像、生成密钥和主机指纹，询问大模型、Prometheus / Alertmanager / Grafana 地址与认证，让你设定

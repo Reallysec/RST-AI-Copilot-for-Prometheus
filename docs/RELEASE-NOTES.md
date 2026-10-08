@@ -6,6 +6,20 @@ delivery archive is named after.
 
 ---
 
+## 0.2.0 — 2026-10-08
+
+- **New names**: the repositories are now `Reallysec/RST-AI-Copilot-for-Prometheus` (public download) and
+  `RST-AI-Copilot-for-Prometheus-Enterprise`; GitHub redirects the old addresses. The bundle and its top directory
+  are `RST-AI-Copilot-for-Prometheus-<version>`, images and containers `rst-ai-copilot-for-prometheus-*`, and new
+  installs go to `/opt/rst-ai-copilot-for-prometheus`. The license product ID is unchanged.
+- **Upgrading from 0.1.x needs one manual step**: a 0.1.x gateway cannot update online to 0.2.0, because it looks for
+  the old bundle name. Run `install.sh` (it upgrades an existing `/opt/rst-prometheus-ai-copilot` in place) or unpack
+  the bundle into the existing install directory and re-run `deploy.sh`. Keep the install directory: it names the
+  data volumes and holds the host fingerprint. Online updates work again from 0.2.0 on. See section 14 of the
+  deployment guide.
+- **EULA dialog**: switching the agreement language switches the whole dialog (title, checkbox, buttons), not only
+  the text.
+
 ## 0.1.1 — 2026-10-08
 
 - **Settings in `.env` now take effect**: the gateway in `docker-compose.prod.yml` reads `.env` as a whole

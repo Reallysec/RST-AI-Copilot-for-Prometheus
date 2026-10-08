@@ -7,7 +7,7 @@ RST AI Copilot for Prometheus 自己的持久化数据全部在安装主机上�
 | 数据 | 在哪 | 备份方式 |
 |---|---|---|
 | 网关配置 / 大模型配置 / License 激活记录 / 加密密钥 | `gateway_state` 卷（`/app/state`） | `scripts/backup.sh` |
-| `.env` + 主机指纹两半（`state/machine-id`、`state/server_guid`） | 安装目录（默认 `/opt/rst-prometheus-ai-copilot`） | `scripts/backup.sh`（一并） |
+| `.env` + 主机指纹两半（`state/machine-id`、`state/server_guid`） | 安装目录（默认 `/opt/rst-ai-copilot-for-prometheus`） | `scripts/backup.sh`（一并） |
 | 账号与角色、审计事件、会话、分析记录、报表历史、通知配置与投递记录、知识库向量 | `pg_data` 卷（PostgreSQL + pgvector） | `scripts/backup.sh`（`pg_dump`，一并） |
 | Caddy 内置 CA 根证书 + 站点证书 | `caddy_data` 卷（`/data`） | `scripts/backup.sh`（一并） |
 | 反馈失败用例 | 容器内 `/app/eval/failed_cases.yaml` | `scripts/backup.sh`（一并） |
@@ -34,8 +34,8 @@ bash scripts/backup.sh [备份目录]      # 默认 ./backups
 
 脚本按自己所在位置找安装目录里的 `.env` 和 `state/`，所以用安装目录里的那份 `scripts/backup.sh`。容器名可用
 环境变量改：`RST_GATEWAY_CONTAINER`、`RST_PG_CONTAINER`、`RST_CADDY_CONTAINER`。SSO 部署设
-`RST_GATEWAY_CONTAINER=rst-prometheus-ai-copilot-sso-gateway`、`RST_PG_CONTAINER=rst-prometheus-ai-copilot-sso-postgres`、
-`RST_CADDY_CONTAINER=rst-prometheus-ai-copilot-sso-caddy`。
+`RST_GATEWAY_CONTAINER=rst-ai-copilot-for-prometheus-sso-gateway`、`RST_PG_CONTAINER=rst-ai-copilot-for-prometheus-sso-postgres`、
+`RST_CADDY_CONTAINER=rst-ai-copilot-for-prometheus-sso-caddy`。
 
 > **这些文件等价于明文凭据。** `.env` 里有大模型 key、数据源口令和内部密钥；`/app/state` 里同时有加密的设置和
 > 解密它们的 `.rst_secret_key`；数据库导出里有账号口令 hash 和全部审计事件。备份目录按 `chmod 700` 存，
@@ -47,7 +47,7 @@ bash scripts/backup.sh [备份目录]      # 默认 ./backups
 **建议挂 cron**（每日 02:00）：
 
 ```cron
-0 2 * * * cd /opt/rst-prometheus-ai-copilot && bash scripts/backup.sh /backup/rst-copilot >> /backup/rst-copilot/backup.out 2>&1
+0 2 * * * cd /opt/rst-ai-copilot-for-prometheus && bash scripts/backup.sh /backup/rst-copilot >> /backup/rst-copilot/backup.out 2>&1
 ```
 
 ---
@@ -71,7 +71,7 @@ docker compose -f docker-compose.prod.yml up -d --force-recreate gateway caddy
   新版本启动时会自动补上缺的迁移，旧版本读不了新表结构。
 
 **换机恢复**（指纹跟着 `state/` 走，License 不用重新激活）：在新主机把**同版本**交付包解压到
-`/opt/rst-prometheus-ai-copilot` → `bash scripts/restore.sh host-files-XXXX.tar.gz` → `./deploy.sh` 选
+`/opt/rst-ai-copilot-for-prometheus` → `bash scripts/restore.sh host-files-XXXX.tar.gz` → `./deploy.sh` 选
 「保留现有 .env」（会起好 PostgreSQL 和网关）→
 `bash scripts/restore.sh gateway-state-XXXX.tar.gz postgres-XXXX.dump caddy-data-XXXX.tar.gz` → 按上面重建容器。
 旧主机上的同一份 `state/` 不要再同时运行。

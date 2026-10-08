@@ -20,15 +20,19 @@
 set -euo pipefail
 
 PRODUCT="RST AI Copilot for Prometheus"
-STEM="RST-Prometheus-AI-Copilot"                     # archive: <STEM>-<version>.tar.gz
+STEM="RST-AI-Copilot-for-Prometheus"                     # archive: <STEM>-<version>.tar.gz
 GH_REPO="reallysec/RST-AI-Copilot-for-Prometheus"
-DIR="/opt/rst-prometheus-ai-copilot"
-# China mirror (Tencent COS): <base>/rst-prometheus-ai-copilot/<version>/<file> and .../latest/VERSION.
+DIR="/opt/rst-ai-copilot-for-prometheus"
+# Installs from 0.1.x live in the pre-rename directory. It names the compose project (so
+# the data volumes) and holds state/server_guid: keep upgrading it in place.
+LEGACY_DIR="/opt/rst-prometheus-ai-copilot"
+[ -f "$LEGACY_DIR/.env" ] && DIR="$LEGACY_DIR"
+# China mirror (Tencent COS): <base>/rst-ai-copilot-for-prometheus/<version>/<file> and .../latest/VERSION.
 # The bucket does not exist yet — this default is a PLACEHOLDER. Until it is replaced (or
 # RST_COS_BASE is set) the mirror is skipped instead of trying a bogus host.
 COS_PLACEHOLDER="https://rst-releases-XXXXXXXX.cos.ap-shanghai.myqcloud.com"
 COS_BASE="${RST_COS_BASE:-$COS_PLACEHOLDER}"
-COS_PREFIX="rst-prometheus-ai-copilot"
+COS_PREFIX="rst-ai-copilot-for-prometheus"
 # GitHub endpoints; overridable so the tests can run offline against file:// trees.
 # Nothing here is trusted: only the signature below is.
 GH_BASE="${RST_GITHUB_BASE:-https://github.com/$GH_REPO/releases}"

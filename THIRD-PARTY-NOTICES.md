@@ -16,7 +16,7 @@ the list for an image is in its package database (Debian:
 
 | Image | Base | Licenses | Source |
 |---|---|---|---|
-| rst-prometheus-ai-copilot-gateway | `python:3.13-slim` (Debian) | Python: PSF-2.0. Debian packages under their own licenses, including GPL-2.0 / GPL-3.0 (e.g. bash, coreutils, dpkg, tar) and LGPL (e.g. glibc) | https://github.com/docker-library/python, https://sources.debian.org |
+| rst-ai-copilot-for-prometheus-gateway | `python:3.13-slim` (Debian) | Python: PSF-2.0. Debian packages under their own licenses, including GPL-2.0 / GPL-3.0 (e.g. bash, coreutils, dpkg, tar) and LGPL (e.g. glibc) | https://github.com/docker-library/python, https://sources.debian.org |
 | `caddy:2` | Alpine Linux | Caddy: Apache-2.0. Alpine packages under their own licenses, including GPL-2.0 (BusyBox) and MIT (musl) | https://github.com/caddyserver/caddy, https://gitlab.alpinelinux.org/alpine/aports |
 | `pgvector/pgvector:pg16` | `postgres:16` (Debian) | PostgreSQL: PostgreSQL License. pgvector: PostgreSQL License. Debian packages under their own licenses, including GPL-2.0 / GPL-3.0 and LGPL (e.g. glibc) | https://www.postgresql.org/about/licence/, https://github.com/pgvector/pgvector, https://sources.debian.org |
 

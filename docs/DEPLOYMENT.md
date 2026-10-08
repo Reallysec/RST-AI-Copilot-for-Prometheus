@@ -27,7 +27,7 @@
                                                        └─▶ license.reallysec.com:443(激活 / 心跳 / 更新)
 ```
 
-容器：`rst-prometheus-ai-copilot-gateway`、`rst-prometheus-ai-copilot-postgres`、`rst-prometheus-ai-copilot-caddy`。
+容器：`rst-ai-copilot-for-prometheus-gateway`、`rst-ai-copilot-for-prometheus-postgres`、`rst-ai-copilot-for-prometheus-caddy`。
 
 ---
 
@@ -82,7 +82,7 @@ Grafana 不在出站表里：网关只拼 Grafana 的浏览器链接，不调它
 
 | `CADDY_TLS` | 效果 |
 |---|---|
-| `internal`（默认） | Caddy 内置 CA 签发的**自签名证书**，IP 和域名都适用；把根证书分发给运维电脑信任即可（`docker exec rst-prometheus-ai-copilot-caddy cat /data/caddy/pki/authorities/local/root.crt`） |
+| `internal`（默认） | Caddy 内置 CA 签发的**自签名证书**，IP 和域名都适用；把根证书分发给运维电脑信任即可（`docker exec rst-ai-copilot-for-prometheus-caddy cat /data/caddy/pki/authorities/local/root.crt`） |
 | `/etc/caddy/certs/cert.pem /etc/caddy/certs/key.pem` | 客户自己的证书：把 `cert.pem`、`key.pem` 放进安装目录的 `./certs` |
 | `you@example.com` | Let's Encrypt 公网证书：需要公网 DNS 域名，且 80/443 能从公网访问 |
 
@@ -92,12 +92,12 @@ Grafana 不在出站表里：网关只拼 Grafana 的浏览器链接，不调它
 
 ## 4. 获取交付包
 
-一体包 `RST-Prometheus-AI-Copilot-<版本>.tar.gz` = 镜像 tar（网关、Caddy、`pgvector/pgvector:pg16`）+ 全部
+一体包 `RST-AI-Copilot-for-Prometheus-<版本>.tar.gz` = 镜像 tar（网关、Caddy、`pgvector/pgvector:pg16`）+ 全部
 部署文件（compose、Caddyfile、`.env.example`、`deploy.sh`、`deploy/` 更新脚本、`scripts/` 备份脚本、`docs/`）。
 所有版本是同一个包，附 `.sha256` 校验文件：
 
 ```bash
-sha256sum -c RST-Prometheus-AI-Copilot-<版本>.tar.gz.sha256
+sha256sum -c RST-AI-Copilot-for-Prometheus-<版本>.tar.gz.sha256
 ```
 
 离线主机：在有网的机器上下载、校验，再把包和 `.sha256` 拷过去。包里已含全部镜像，部署时不需要访问镜像仓库。
@@ -118,12 +118,12 @@ docker version && docker compose version
 
 ## 6. 一键部署
 
-把交付包解压到固定目录（推荐 `/opt/rst-prometheus-ai-copilot`，以后升级解压到同一目录）后跑 `deploy.sh`：
+把交付包解压到固定目录（推荐 `/opt/rst-ai-copilot-for-prometheus`，以后升级解压到同一目录）后跑 `deploy.sh`：
 
 ```bash
-sudo mkdir -p /opt/rst-prometheus-ai-copilot
-sudo tar xzf RST-Prometheus-AI-Copilot-<版本>.tar.gz -C /opt/rst-prometheus-ai-copilot --strip-components=1
-cd /opt/rst-prometheus-ai-copilot && sudo ./deploy.sh
+sudo mkdir -p /opt/rst-ai-copilot-for-prometheus
+sudo tar xzf RST-AI-Copilot-for-Prometheus-<版本>.tar.gz -C /opt/rst-ai-copilot-for-prometheus --strip-components=1
+cd /opt/rst-ai-copilot-for-prometheus && sudo ./deploy.sh
 ```
 
 `deploy.sh` 交互引导（提示中英双语）：
@@ -146,7 +146,7 @@ cd /opt/rst-prometheus-ai-copilot && sudo ./deploy.sh
 `.env.<时间>.bak`，PostgreSQL 口令沿用旧值（数据卷是用旧口令初始化的）。
 
 **手动备选**（不走交互）：`cp .env.example .env` 填必填项（见 §18）→
-`docker load < RST-Prometheus-AI-Copilot-images-<版本>.tar` → `docker compose -f docker-compose.prod.yml up -d`。
+`docker load < RST-AI-Copilot-for-Prometheus-images-<版本>.tar` → `docker compose -f docker-compose.prod.yml up -d`。
 
 **用客户自己的 PostgreSQL**：需要 PostgreSQL 16 并装好 pgvector 扩展。把 `.env` 的 `RST_DB_URL` 指过去，
 然后只起 `gateway caddy`：`docker compose -f docker-compose.prod.yml up -d --no-deps gateway caddy`。
@@ -278,7 +278,7 @@ https://copilot.corp.local/v2/
 **忘记 / 更换管理员口令**（单账号部署），在安装目录：
 
 ```bash
-docker exec rst-prometheus-ai-copilot-gateway python -m backend.session_auth '<新口令>'
+docker exec rst-ai-copilot-for-prometheus-gateway python -m backend.session_auth '<新口令>'
 # 把输出写进 .env 的 RST_ADMIN_PASSWORD_HASH=，其中每个 $ 写成 $$
 docker compose -f docker-compose.prod.yml up -d gateway
 ```
@@ -360,6 +360,18 @@ PostgreSQL，在「审计日志」页查看。确实不需要时在 `.env` 里�
 它会加载新镜像并把 `GATEWAY_IMAGE_TAG` 改成新版本。`.env`、`state/` 和数据卷都保留，指纹不变，不用重新激活。
 数据库表结构由网关启动时的迁移自动升级。
 
+**从 0.1.x 升级到 0.2.0（一次性，手动）**：0.2.0 起产品的交付包、包内目录、镜像和容器统一改名为
+`RST-AI-Copilot-for-Prometheus-*` / `rst-ai-copilot-for-prometheus-*`，0.1.x 的网关按旧文件名找包，**在线更新到不了 0.2.0**。
+手动换包一次，之后照常在线更新：
+
+- 联网主机：`curl -fsSL https://github.com/Reallysec/RST-AI-Copilot-for-Prometheus/releases/latest/download/install.sh | sudo bash`。
+  它发现旧目录 `/opt/rst-prometheus-ai-copilot` 里有 `.env` 就在原目录升级。
+- 离线主机：把 0.2.0 交付包解压到**原安装目录**（默认 `/opt/rst-prometheus-ai-copilot`）后重跑 `deploy.sh`，选「保留现有 .env」。
+
+**不要换安装目录**：目录名决定 compose 项目名，也就决定数据卷名；`state/server_guid` 也在目录里。换目录会起一套空卷，
+数据看起来像丢了，指纹也会变、许可证要重新激活。新装才用新目录 `/opt/rst-ai-copilot-for-prometheus`。
+容器会按新名字重建（数据卷不变），备份 / 恢复脚本新旧容器名都认。
+
 **在线更新**分两段（签名 + 健康门控）：
 
 1. **网关侧**（下载暂存）：网关心跳收到新版 → License/更新页触发下载。验签 + 每个制品 sha256，fail-closed 写入
@@ -400,9 +412,9 @@ PostgreSQL，在「审计日志」页查看。确实不需要时在 `.env` 里�
 | 打不开 `/v2/` | `docker compose -f docker-compose.prod.yml logs caddy gateway`；确认入站 443、`CADDY_SITE_ADDRESS` 是实际访问的域名或 IP |
 | 浏览器提示证书不安全 | 默认自签名证书（§3）：信任 Caddy 根证书或换自有证书 |
 | 登录提示口令被拒（远程登录） | `.env` 缺 `RST_ADMIN_PASSWORD_HASH`，按 §11 设置 |
-| HTTPS 握手失败（裸 IP） | 确认 caddy 传入了 `CADDY_DEFAULT_SNI`；`docker restart rst-prometheus-ai-copilot-caddy` 生效 |
+| HTTPS 握手失败（裸 IP） | 确认 caddy 传入了 `CADDY_DEFAULT_SNI`；`docker restart rst-ai-copilot-for-prometheus-caddy` 生效 |
 | `/readyz` 503，`db: unreachable` | `docker compose -f docker-compose.prod.yml ps postgres`；`.env` 的 `RST_DB_URL` 口令与 `RST_DB_PASSWORD` 是否一致 |
-| `/readyz` 503，`prometheus` 不是 `ok` | 网关到 Prometheus 是否通（`docker exec rst-prometheus-ai-copilot-gateway curl -s $PROMETHEUS_URL/-/ready`）；认证和 CA 是否正确 |
+| `/readyz` 503，`prometheus` 不是 `ok` | 网关到 Prometheus 是否通（`docker exec rst-ai-copilot-for-prometheus-gateway curl -s $PROMETHEUS_URL/-/ready`）；认证和 CA 是否正确 |
 | 查询报错 / 空 | 设置页测试数据源；PromQL 校验失败时页面会显示 Prometheus 的原始报错；大模型 key / endpoint 是否正确 |
 | 告警页为空 | Alertmanager URL 和认证；Alertmanager 自己是否有活动告警 |
 | 通知发不出 | 「通知」页看投递记录里的错误；出站到渠道域名是否放通；修好后点「重投」 |
@@ -414,10 +426,10 @@ PostgreSQL，在「审计日志」页查看。确实不需要时在 `.env` 里�
 
 ## 17. 卸载
 
-在安装目录（默认 `/opt/rst-prometheus-ai-copilot`）操作。先按 §15 备份，除非确定不再需要。
+在安装目录（默认 `/opt/rst-ai-copilot-for-prometheus`）操作。先按 §15 备份，除非确定不再需要。
 
 ```bash
-cd /opt/rst-prometheus-ai-copilot
+cd /opt/rst-ai-copilot-for-prometheus
 # SSO 部署把文件换成 docker-compose.sso.yml
 
 # A. 停止并删除容器，保留数据卷（以后在同目录重新 ./deploy.sh 可原样恢复）
@@ -427,10 +439,10 @@ docker compose -f docker-compose.prod.yml down
 docker compose -f docker-compose.prod.yml down -v
 
 # 删除镜像（版本号按 docker image ls 实际所见）
-docker image rm rst-prometheus-ai-copilot-gateway:<版本> caddy:2 pgvector/pgvector:pg16
+docker image rm rst-ai-copilot-for-prometheus-gateway:<版本> caddy:2 pgvector/pgvector:pg16
 
 # 删除安装目录（含 .env 和 state/）
-cd / && sudo rm -rf /opt/rst-prometheus-ai-copilot
+cd / && sudo rm -rf /opt/rst-ai-copilot-for-prometheus
 ```
 
 - **客户 Prometheus / Alertmanager 不受影响**：Copilot 写过的规则文件和静默由客户自行清理。
@@ -464,7 +476,7 @@ RST_DB_URL=postgresql://rst:<同上>@postgres:5432/rst
 # —— 网关认证（必填，各 32+ 随机串）——
 RST_GATEWAY_SHARED_SECRET=<openssl rand -hex 32>
 RST_ADMIN_TOKEN=<openssl rand -hex 32>
-RST_ADMIN_PASSWORD_HASH=<docker exec rst-prometheus-ai-copilot-gateway python -m backend.session_auth 'PWD'，$ 写成 $$>
+RST_ADMIN_PASSWORD_HASH=<docker exec rst-ai-copilot-for-prometheus-gateway python -m backend.session_auth 'PWD'，$ 写成 $$>
 
 # —— Caddy 反代（必填）——
 CADDY_SITE_ADDRESS=copilot.corp.local   # 域名或 IP 均可

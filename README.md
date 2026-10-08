@@ -43,9 +43,9 @@ recommended; without one, queries fall back to keyword generation and are marked
 With the delivery bundle:
 
 ```bash
-sha256sum -c RST-Prometheus-AI-Copilot-<version>.tar.gz.sha256
-tar xzf RST-Prometheus-AI-Copilot-<version>.tar.gz
-cd RST-Prometheus-AI-Copilot-<version> && ./deploy.sh
+sha256sum -c RST-AI-Copilot-for-Prometheus-<version>.tar.gz.sha256
+tar xzf RST-AI-Copilot-for-Prometheus-<version>.tar.gz
+cd RST-AI-Copilot-for-Prometheus-<version> && ./deploy.sh
 ```
 
 `deploy.sh` loads the images, generates secrets and the host fingerprint, asks for the model endpoint and the

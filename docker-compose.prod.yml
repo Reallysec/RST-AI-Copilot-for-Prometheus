@@ -16,7 +16,7 @@
 #
 # Manual path (only if you cannot run deploy.sh) — the delivery ships PREBUILT
 # images, there is no Dockerfile in it, so never pass --build:
-#   1. gunzip -c RST-Prometheus-AI-Copilot-images-*.tar.gz | docker load
+#   1. gunzip -c RST-AI-Copilot-for-Prometheus-images-*.tar.gz | docker load
 #      and put the loaded gateway tag in .env as GATEWAY_IMAGE_TAG=<tag>.
 #   2. cp .env.example .env  — fill LLM_*, RST_GATEWAY_SHARED_SECRET,
 #      RST_ADMIN_TOKEN, RST_DB_PASSWORD (+ RST_DB_URL with the same password) and
@@ -39,8 +39,8 @@ services:
     # Tag is installer-managed: rst-update.sh writes GATEWAY_IMAGE_TAG into .env
     # on a health-gated release install / rollback (P4). Default preserves the
     # pre-P4 behaviour when the var is unset.
-    image: rst-prometheus-ai-copilot-gateway:${GATEWAY_IMAGE_TAG:-0.1.1}
-    container_name: rst-prometheus-ai-copilot-gateway
+    image: rst-ai-copilot-for-prometheus-gateway:${GATEWAY_IMAGE_TAG:-0.2.0}
+    container_name: rst-ai-copilot-for-prometheus-gateway
     restart: unless-stopped
     # Resource ceiling so one runaway request / memory leak can't starve the
     # host. Override in .env per host size.
@@ -135,7 +135,7 @@ services:
       # Current running version — the heartbeat sends it, and the server only
       # offers a release/content pack newer than this. Keep in lockstep with
       # GATEWAY_IMAGE_TAG (rst-update.sh bumps the tag on install).
-      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-0.1.1}}
+      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-0.2.0}}
       # Vendor content/release signing PUBLIC key — content packs + online releases
       # verify against it fail-closed. OPTIONAL: leave unset and verification falls
       # back to the built-in license public key (fine until you ship dedicated-key
@@ -238,7 +238,7 @@ services:
   # dev stack. Backups: this volume — see docs/BACKUP.md.
   postgres:
     image: pgvector/pgvector:pg16
-    container_name: rst-prometheus-ai-copilot-postgres
+    container_name: rst-ai-copilot-for-prometheus-postgres
     restart: unless-stopped
     environment:
       - POSTGRES_USER=${RST_DB_USER:-rst}
@@ -254,7 +254,7 @@ services:
 
   caddy:
     image: caddy:2
-    container_name: rst-prometheus-ai-copilot-caddy
+    container_name: rst-ai-copilot-for-prometheus-caddy
     restart: unless-stopped
     ports:
       - "80:80"

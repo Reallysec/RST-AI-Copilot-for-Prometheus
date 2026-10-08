@@ -29,7 +29,7 @@ operator browser ──HTTPS(443)──▶ Caddy ──HTTP(internal)──▶ A
                                                             └─▶ license.reallysec.com :443 (activation / heartbeat / updates)
 ```
 
-Containers: `rst-prometheus-ai-copilot-gateway`, `rst-prometheus-ai-copilot-postgres`, `rst-prometheus-ai-copilot-caddy`.
+Containers: `rst-ai-copilot-for-prometheus-gateway`, `rst-ai-copilot-for-prometheus-postgres`, `rst-ai-copilot-for-prometheus-caddy`.
 
 ---
 
@@ -85,7 +85,7 @@ hand with several space-separated addresses in `CADDY_SITE_ADDRESS`, set `CADDY_
 
 | `CADDY_TLS` | Effect |
 |---|---|
-| `internal` (default) | **self-signed** certificate from Caddy's internal CA, for IPs and host names; distribute the root certificate to operator machines (`docker exec rst-prometheus-ai-copilot-caddy cat /data/caddy/pki/authorities/local/root.crt`) |
+| `internal` (default) | **self-signed** certificate from Caddy's internal CA, for IPs and host names; distribute the root certificate to operator machines (`docker exec rst-ai-copilot-for-prometheus-caddy cat /data/caddy/pki/authorities/local/root.crt`) |
 | `/etc/caddy/certs/cert.pem /etc/caddy/certs/key.pem` | your own certificate: put `cert.pem` and `key.pem` into `./certs` in the install directory |
 | `you@example.com` | Let's Encrypt: needs a public DNS name with 80/443 reachable from the internet |
 
@@ -95,13 +95,13 @@ Apply with `docker compose -f docker-compose.prod.yml up -d caddy`.
 
 ## 4. Get the bundle
 
-The all-in-one bundle `RST-Prometheus-AI-Copilot-<version>.tar.gz` holds the image tar (gateway, Caddy,
+The all-in-one bundle `RST-AI-Copilot-for-Prometheus-<version>.tar.gz` holds the image tar (gateway, Caddy,
 `pgvector/pgvector:pg16`) and every deployment file (compose files, Caddyfiles, `.env.example`, `deploy.sh`, the
 `deploy/` update scripts, the `scripts/` backup scripts, `docs/`). Every edition is the same bundle, shipped with a
 `.sha256` file:
 
 ```bash
-sha256sum -c RST-Prometheus-AI-Copilot-<version>.tar.gz.sha256
+sha256sum -c RST-AI-Copilot-for-Prometheus-<version>.tar.gz.sha256
 ```
 
 Offline hosts: download and verify on a connected machine, then copy the bundle and its `.sha256` over. The bundle
@@ -123,13 +123,13 @@ On an offline host install Docker Engine 24+ and the Compose plugin from your di
 
 ## 6. Install
 
-Unpack the bundle into a fixed directory (`/opt/rst-prometheus-ai-copilot` is recommended; upgrades unpack into the
+Unpack the bundle into a fixed directory (`/opt/rst-ai-copilot-for-prometheus` is recommended; upgrades unpack into the
 same directory) and run `deploy.sh`:
 
 ```bash
-sudo mkdir -p /opt/rst-prometheus-ai-copilot
-sudo tar xzf RST-Prometheus-AI-Copilot-<version>.tar.gz -C /opt/rst-prometheus-ai-copilot --strip-components=1
-cd /opt/rst-prometheus-ai-copilot && sudo ./deploy.sh
+sudo mkdir -p /opt/rst-ai-copilot-for-prometheus
+sudo tar xzf RST-AI-Copilot-for-Prometheus-<version>.tar.gz -C /opt/rst-ai-copilot-for-prometheus --strip-components=1
+cd /opt/rst-ai-copilot-for-prometheus && sudo ./deploy.sh
 ```
 
 `deploy.sh` walks through (prompts are bilingual):
@@ -157,7 +157,7 @@ Choosing to replace it backs the old file up as `.env.<timestamp>.bak` and keeps
 volume was initialised with it).
 
 **Manual path**: `cp .env.example .env`, fill in the required keys (§18), then
-`docker load < RST-Prometheus-AI-Copilot-images-<version>.tar` and `docker compose -f docker-compose.prod.yml up -d`.
+`docker load < RST-AI-Copilot-for-Prometheus-images-<version>.tar` and `docker compose -f docker-compose.prod.yml up -d`.
 
 **Your own PostgreSQL**: PostgreSQL 16 with the pgvector extension. Point `RST_DB_URL` in `.env` at it and start only
 the gateway and Caddy: `docker compose -f docker-compose.prod.yml up -d --no-deps gateway caddy`. The gateway creates
@@ -302,7 +302,7 @@ gateway refuses every login that comes through the browser (Caddy) and warns on 
 **Forgotten / changed admin password** (single-account install), in the install directory:
 
 ```bash
-docker exec rst-prometheus-ai-copilot-gateway python -m backend.session_auth '<new password>'
+docker exec rst-ai-copilot-for-prometheus-gateway python -m backend.session_auth '<new password>'
 # put the output into RST_ADMIN_PASSWORD_HASH= in .env, writing every $ as $$
 docker compose -f docker-compose.prod.yml up -d gateway
 ```
@@ -395,6 +395,20 @@ administrator accepts once for the whole installation.
 version. `.env`, `state/` and the volumes stay; the fingerprint does not change and no re-activation is needed. The
 gateway migrates the database schema on start.
 
+**Upgrading from 0.1.x to 0.2.0 (once, by hand)**: from 0.2.0 the bundle, its top directory, the images and the
+containers are named `RST-AI-Copilot-for-Prometheus-*` / `rst-ai-copilot-for-prometheus-*`. A 0.1.x gateway looks for
+the old file name, so **online update cannot reach 0.2.0**. Upgrade by hand once; online updates work again after that:
+
+- Connected host: `curl -fsSL https://github.com/Reallysec/RST-AI-Copilot-for-Prometheus/releases/latest/download/install.sh | sudo bash`.
+  It finds `.env` in the old directory `/opt/rst-prometheus-ai-copilot` and upgrades there.
+- Offline host: unpack the 0.2.0 bundle into **the existing install directory** (default `/opt/rst-prometheus-ai-copilot`)
+  and re-run `deploy.sh`, choosing "keep the existing .env".
+
+**Do not move the install directory**: its name is the compose project name, which names the data volumes, and
+`state/server_guid` lives in it. A new directory starts with empty volumes: the data seems lost, the fingerprint
+changes and the license must be activated again. Only new installs use `/opt/rst-ai-copilot-for-prometheus`. The
+containers are recreated under the new names (same volumes); the backup and restore scripts find either name.
+
 **Online update**, in two steps (signed, health-gated):
 
 1. **Gateway**: the heartbeat announces a new version → start the download on the License / update page. Signature
@@ -439,9 +453,9 @@ Back up:
 | `/v2/` does not open | `docker compose -f docker-compose.prod.yml logs caddy gateway`; inbound 443; `CADDY_SITE_ADDRESS` is the name or IP actually used |
 | Browser certificate warning | self-signed by default (§3): trust the Caddy root or use your own certificate |
 | Remote login refused | `.env` lacks `RST_ADMIN_PASSWORD_HASH`; see §11 |
-| TLS handshake fails on a bare IP | caddy must receive `CADDY_DEFAULT_SNI`; `docker restart rst-prometheus-ai-copilot-caddy` |
+| TLS handshake fails on a bare IP | caddy must receive `CADDY_DEFAULT_SNI`; `docker restart rst-ai-copilot-for-prometheus-caddy` |
 | `/readyz` 503 with `db: unreachable` | `docker compose -f docker-compose.prod.yml ps postgres`; the password in `RST_DB_URL` must equal `RST_DB_PASSWORD` |
-| `/readyz` 503, `prometheus` not `ok` | can the gateway reach Prometheus (`docker exec rst-prometheus-ai-copilot-gateway curl -s $PROMETHEUS_URL/-/ready`); auth and CA |
+| `/readyz` 503, `prometheus` not `ok` | can the gateway reach Prometheus (`docker exec rst-ai-copilot-for-prometheus-gateway curl -s $PROMETHEUS_URL/-/ready`); auth and CA |
 | Query errors / empty results | test the data sources on the Settings page; failed PromQL validation shows Prometheus' own error; model key / endpoint |
 | Alerts page empty | Alertmanager URL and auth; does Alertmanager itself have active alerts |
 | Notifications not delivered | the error in the delivery list on the Notifications page; outbound access to the channel; re-queue once fixed |
@@ -453,10 +467,10 @@ Back up:
 
 ## 17. Uninstall
 
-In the install directory (default `/opt/rst-prometheus-ai-copilot`). Back up first (§15) unless you are sure.
+In the install directory (default `/opt/rst-ai-copilot-for-prometheus`). Back up first (§15) unless you are sure.
 
 ```bash
-cd /opt/rst-prometheus-ai-copilot
+cd /opt/rst-ai-copilot-for-prometheus
 # SSO installs use docker-compose.sso.yml instead
 
 # A. remove the containers, keep the volumes (re-running ./deploy.sh here restores everything)
@@ -466,10 +480,10 @@ docker compose -f docker-compose.prod.yml down
 docker compose -f docker-compose.prod.yml down -v
 
 # remove the images (use the versions `docker image ls` shows)
-docker image rm rst-prometheus-ai-copilot-gateway:<version> caddy:2 pgvector/pgvector:pg16
+docker image rm rst-ai-copilot-for-prometheus-gateway:<version> caddy:2 pgvector/pgvector:pg16
 
 # remove the install directory (including .env and state/)
-cd / && sudo rm -rf /opt/rst-prometheus-ai-copilot
+cd / && sudo rm -rf /opt/rst-ai-copilot-for-prometheus
 ```
 
 - **The customer's Prometheus / Alertmanager are untouched**: remove rule files and silences the Copilot wrote
@@ -504,7 +518,7 @@ RST_DB_URL=postgresql://rst:<same>@postgres:5432/rst
 # —— Gateway auth (required, 32+ random characters each) ——
 RST_GATEWAY_SHARED_SECRET=<openssl rand -hex 32>
 RST_ADMIN_TOKEN=<openssl rand -hex 32>
-RST_ADMIN_PASSWORD_HASH=<docker exec rst-prometheus-ai-copilot-gateway python -m backend.session_auth 'PWD', every $ as $$>
+RST_ADMIN_PASSWORD_HASH=<docker exec rst-ai-copilot-for-prometheus-gateway python -m backend.session_auth 'PWD', every $ as $$>
 
 # —— Caddy (required) ——
 CADDY_SITE_ADDRESS=copilot.corp.local   # host name or IP
