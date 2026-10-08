@@ -6,6 +6,15 @@ delivery archive is named after.
 
 ---
 
+## 0.2.2 — 2026-10-08
+
+- **Investigations finish with a conclusion**: when the AI had used all its query rounds it sometimes kept writing
+  its reasoning instead of the verdict, and the result showed as "degraded". The last round now asks for the
+  verdict explicitly, and an unreadable reply gets one more try before falling back.
+- **License time check uses HTTPS only**: trusted time now comes from the license server's signed time or an HTTPS
+  `Date` header, no longer from UDP NTP. Nothing to configure; `RSTLIC_NTP` is no longer read. Closed networks that
+  relied on an internal NTP server set `RSTLIC_TIME_URL` to an internal HTTPS source instead.
+
 ## 0.2.1 — 2026-10-08
 
 - **Investigation timelines show the right times**: the model now receives metric samples and the alert start as
