@@ -12,11 +12,12 @@
 </p>
 
 <p align="center">
-  <b>English</b> · <a href="README.zh-CN.md">简体中文</a> · <a href="docs/DEPLOYMENT.en.md">Deployment guide</a> · <a href="docs/RELEASE-NOTES.md">Release notes</a>
+  <b>English</b> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://reallysec.com/en/docs/prometheus-ai-copilot">Docs</a> · <a href="https://github.com/Reallysec/RST-AI-Copilot-for-Prometheus/releases">Download</a> · <a href="docs/RELEASE-NOTES.md">Release notes</a>
 </p>
 
-> **0.1.0 preview.** Pages and features are still being completed for network operations;
-> the preview is for demos and pilots, not for production.
+<p align="center">
+  <img src=".github/assets/chat-result.en.png" alt="Smart query: question, generated PromQL and chart" width="92%">
+</p>
 
 ## Why RST AI Copilot for Prometheus
 
@@ -38,7 +39,8 @@
 
 You need a Linux host (Docker Engine 24+, Compose v2) that can reach your Prometheus and Alertmanager
 (Grafana is optional) and a host name or IP for the operators. An OpenAI-compatible model endpoint is
-recommended; without one, queries fall back to keyword generation and are marked low-confidence.
+recommended; without one, queries fall back to keyword generation and are marked low-confidence
+([full requirements](https://reallysec.com/en/docs/prometheus-ai-copilot/install/requirements)).
 
 With the delivery bundle:
 
@@ -53,6 +55,8 @@ Prometheus / Alertmanager / Grafana addresses and credentials, lets you set the 
 gateway and the bundled PostgreSQL (pgvector) behind Caddy TLS. After about two minutes open
 `https://<host or IP>/v2/` and sign in as `admin`. You can leave the data sources blank and fill them in later
 under Settings → Data sources, which tests the connection before saving.
+
+Upgrade, rollback, backup, SSO and every `.env` key: [installation docs](https://reallysec.com/en/docs/prometheus-ai-copilot/install/deploy).
 
 No network devices yet? Layer the network lab on the deployment stack: 30 simulated devices from 13 vendors
 plus a bundled Prometheus, Alertmanager and Grafana:
@@ -73,7 +77,8 @@ See section 9 of the [deployment guide](docs/DEPLOYMENT.en.md).
   all audited.
 - **Alert triage and root-cause investigation**: batch triage grouped by device and interface; an agentic
   investigation that gathers evidence from live metrics step by step and ends with a conclusion and actions.
-- **Alert rules**: generate → approve → write the Copilot's own rule file → Prometheus hot reload → roll back.
+- **Alert rules**: write a rule by hand or have the AI draft it, then approve → write the Copilot's own rule file →
+  Prometheus hot reload → roll back.
 - **Network operations**: device inventory (with interface `ifAlias`), network posture, monitoring-coverage
   baseline, capacity forecasting, Prometheus / Alertmanager self-check.
 - **Reports**: daily and weekly network operations reports covering alerts, top-utilised links, errors and
@@ -86,25 +91,46 @@ See section 9 of the [deployment guide](docs/DEPLOYMENT.en.md).
 - **Sign-in and roles**: local accounts with three roles (`admin` / `operator` / `viewer`), optional OIDC single
   sign-on (Keycloak, which can federate LDAP / AD).
 
+<table>
+  <tr>
+    <td width="50%"><img src=".github/assets/alerts.en.png" alt="Live alerts"></td>
+    <td width="50%"><img src=".github/assets/posture.en.png" alt="Network posture"></td>
+  </tr>
+</table>
+
 ## Editions
 
-One bundle for every edition: without a license it runs as the free Community edition; activating a license on
-the License page (`/v2/license`) unlocks Professional or Enterprise in place, without reinstalling. The current
-split follows the platform's existing gates: alert triage, alert investigation, alert-rule generation, the
-platform self-check and reports are Professional; OIDC single sign-on, audit forwarding, multi-provider model
-failover and offline license activation are Enterprise. The final edition matrix for this product is set on the
-license server and will be published before general availability.
+One bundle for every edition: without a license it runs as the free Community edition (one user); activating a
+license on the License page (`/v2/license`) unlocks Professional or Enterprise in place, without reinstalling: data
+and host fingerprint are kept.
+
+- **Community** (free): natural-language queries, live alerts and silences, label masking, metric dictionary,
+  knowledge base, device inventory, monitoring coverage, network posture, hand-written alert rules with approval,
+  write-back and rollback, local audit log, notification setup, online updates.
+- **Professional** (per user): batch alert triage, agentic alert investigation with incident reports, AI alert-rule
+  generation, Prometheus / Alertmanager self-check, capacity forecasting, alert noise reduction and reports.
+- **Enterprise**: OIDC single sign-on, audit forwarding, multi-provider model failover, offline license activation
+  and more nodes.
+
+A 14-day trial covers every Enterprise feature on one host. Paid features stay visible in Community: clicking one
+opens an upgrade dialog. See the [editions page](https://reallysec.com/en/docs/prometheus-ai-copilot/editions).
+
+<table>
+  <tr>
+    <td width="50%"><img src=".github/assets/alerts-investigate.en.png" alt="Alert investigation"></td>
+    <td width="50%"><img src=".github/assets/rules-result.en.png" alt="Generated alert rule"></td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src=".github/assets/triage.en.png" alt="Batch triage" width="92%">
+</p>
 
 ## Architecture and data boundary
 
-```
-browser ──443──▶ Caddy (TLS) ──▶ gateway (FastAPI + React)
-                                  │  ├─ PostgreSQL + pgvector (accounts, audit, reports, notify queue, KB)
-                                  │  ├─ Prometheus / Alertmanager (read-only queries; writes only its own rules and silences)
-                                  │  ├─ model endpoint (masked context)
-                                  │  └─ notification channels (Feishu / DingTalk / WeCom / email / webhook)
-switches / routers / firewalls ──SNMP / ICMP──▶ snmp_exporter / blackbox_exporter ──▶ your Prometheus
-```
+<p align="center">
+  <img src=".github/assets/arch.en.svg" alt="Architecture" width="92%">
+</p>
 
 - Inbound: only 443 from the operators' browsers. Outbound: the model endpoint, your Prometheus / Alertmanager,
   the notification channels you configure, and `license.reallysec.com` (not needed with an offline license).
@@ -125,7 +151,8 @@ switches / routers / firewalls ──SNMP / ICMP──▶ snmp_exporter / blackb
 
 ## Documentation
 
-- [Deployment guide](docs/DEPLOYMENT.en.md) ([中文](docs/DEPLOYMENT.md))
+- [Product documentation](https://reallysec.com/en/docs/prometheus-ai-copilot) on reallysec.com: quick start, installation, user guide, FAQ
+- [Deployment guide](docs/DEPLOYMENT.en.md) ([中文](docs/DEPLOYMENT.md)), also shipped in every bundle
 - [Backup and restore](docs/BACKUP.md)
 - [Release notes](docs/RELEASE-NOTES.md)
 - [Third-party notices](THIRD-PARTY-NOTICES.md)
