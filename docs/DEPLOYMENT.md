@@ -13,7 +13,6 @@
   blackbox_exporter（ICMP / TCP / HTTP 探测）采集进 Prometheus。
 - **形态**：仅 Docker。网关 + PostgreSQL（pgvector）+ Caddy 三个容器；许可门控和付费引擎已 Cython 编译进镜像。
 - **不带 Prometheus**：连接客户**已有的 Prometheus、Alertmanager**，Grafana 可选（只用于跳转链接）。
-  没有现网环境时，用网络实验室叠加演示（§9）。
 - **版本**：同一个交付包。不激活即免费社区版（1 个用户）；专业版 / 企业版在界面上激活（§10）。
 - **默认单副本、网关自带登录**；多用户和 SSO 见 §13。
 
@@ -37,7 +36,7 @@
 |---|---|
 | 操作系统 | x86_64 Linux：Ubuntu 20.04 / 22.04 / 24.04、RHEL / CentOS 8+、麒麟、统信等能跑 Docker 24+ 的发行版 |
 | 运行时 | Docker Engine **24+** 与 Docker Compose **v2**（`docker compose` 插件），bash 4+。`deploy.sh` 预检这两项 |
-| CPU / 内存 | 2 vCPU / 4 GB 起（网关容器上限默认 2 CPU / 2 GB，见 `RST_GATEWAY_CPUS` / `RST_GATEWAY_MEM`）；叠加网络实验室演示时 4 vCPU / 8 GB 起 |
+| CPU / 内存 | 2 vCPU / 4 GB 起（网关容器上限默认 2 CPU / 2 GB，见 `RST_GATEWAY_CPUS` / `RST_GATEWAY_MEM`） |
 | 磁盘 | 20 GB+（镜像、PostgreSQL 数据、状态） |
 | Prometheus | 2.43 及以上，网关主机网络可达；HTTP API（`/api/v1/*`）可用，支持 Basic / Bearer 认证与私有 CA |
 | Alertmanager | 0.25 及以上，API v2 可用（读告警、建 / 撤静默） |
@@ -196,7 +195,7 @@ curl -k https://copilot.corp.local/readyz      # 看 db / prometheus
   ```
 
   不加的话，接口 down 只按默认口径（`ifAlias` 非空）告警、防火墙不报「接近会话上限」、HA 异常不报。
-  开发栈（`deploy/dev/prometheus`）和实验室演示（`deploy/lab-demo`）的 Prometheus 已经带了这一段。
+  开发栈（`deploy/dev/prometheus`）的 Prometheus 已经带了这一段。
 - **告警规则写回**（可选）：Copilot 生成的规则经审批后写进它自己的规则文件，Prometheus 需要加载这个目录并开启
   `--web.enable-lifecycle` 以便热加载。
 
@@ -219,29 +218,9 @@ curl -k https://copilot.corp.local/readyz      # 看 db / prometheus
 
 ---
 
-## 9. 网络实验室演示（叠加到部署栈）
+## 9. （本节已删除）
 
-没有现网设备的演示、试点和培训环境，用 `docker-compose.lab-demo.yml` 把仓库里的网络实验室（`lab/`）叠加到部署栈上：
-30 台模拟设备（13 个厂商 + 1 台通用 MIB 设备，snmpsim 提供 SNMP），snmp_exporter、blackbox_exporter 采集，
-外加一套 Prometheus（加载 `lab/prometheus/scrape-*.yml` 和产品自带的网络规则包）、Alertmanager（只收不发）
-和 Grafana，并把网关的数据源指向它们。
-
-```bash
-# 在安装目录（或仓库根目录），deploy.sh 写好 .env 之后（数据源问题留空即可，叠加文件会填）：
-docker compose -f docker-compose.prod.yml -f docker-compose.lab-demo.yml up -d --build
-```
-
-- `--build` 只在第一次需要：snmpsim 镜像从 `lab/sim` 构建。需要交付包之外的 `lab/` 目录和
-  `app/backend/content/network/rule_pack/`，所以演示一般直接在仓库检出目录里跑。
-- 访问：Copilot `https://<CADDY_SITE_ADDRESS>/v2/`；Grafana `http://<主机>:23000/`（匿名只读，端口可用
-  `LAB_DEMO_GRAFANA_PORT` 改，浏览器跳转地址用 `LAB_DEMO_GRAFANA_URL` 改）。
-- `lab/` 自带的 `lab-prometheus`、`lab-alertmanager` 也会起来（宿主机端口 19090 / 19093，可用 `LAB_PROMETHEUS_PORT` /
-  `LAB_ALERTMANAGER_PORT` 改），网关不用它们。
-- 故障场景（链路 down、带宽打满、错包等）：`sh lab/scenario.sh on <场景>`，用完 `off <场景>`，见 `lab/README.md`。
-- 停止：`docker compose -f docker-compose.prod.yml -f docker-compose.lab-demo.yml down`（加 `-v` 连数据一起删）。
-
-开发机上用开发栈也可以：`LAB_DIR=./lab docker compose -f docker-compose.yml -f lab/docker-compose.lab.yml up -d --build`，
-开发栈的 Prometheus 已经加载 lab 的采集配置。
+原「网络实验室演示」需要源码仓库里的 `lab/` 目录，交付包不含，客户环境无法使用，已删除。保留编号是因为后续章节的编号在脚本、界面和历次发版说明里被引用。
 
 ---
 

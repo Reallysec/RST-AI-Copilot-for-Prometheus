@@ -6,6 +6,20 @@ delivery archive is named after.
 
 ---
 
+## 0.2.3 — 2026-10-12
+
+- **Optical power and BGP sessions**: the snmp_exporter config shipped in `deploy/snmp_exporter/` now reads receive
+  and transmit optical power, with the device's own low-power thresholds, on H3C and Cisco optics, and BGP peer state
+  through BGP4-MIB (new `bgp` module). Three new alerts come with runbooks: `NetworkTransceiverRxPowerLow`,
+  `NetworkBgpSessionDown` and `NetworkBgpSessionFlapping`. To collect the new metrics, replace `snmp.yml` on your
+  snmp_exporter and add `bgp` to the modules of routers and layer-3 switches (see `deploy/snmp_exporter/README.md`).
+- **Investigations look at the optic and the BGP peer**: investigating an alert on a port now also fetches that port's
+  receive power, its warning threshold and its trend over the last hour; an alert on a BGP peer fetches the session
+  state and how often it re-established.
+- **Network-lab demo removed from customer docs**: it needed the repository's `lab/` directory, which is not in the
+  bundle. README no longer mentions it, DEPLOYMENT §9 is kept as an empty section so later section numbers stay the
+  same, and the bundle no longer ships `deploy/lab-demo`.
+
 ## 0.2.2 — 2026-10-08
 
 - **Investigations finish with a conclusion**: when the AI had used all its query rounds it sometimes kept writing

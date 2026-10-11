@@ -58,15 +58,6 @@ under Settings → Data sources, which tests the connection before saving.
 
 Upgrade, rollback, backup, SSO and every `.env` key: [installation docs](https://reallysec.com/en/docs/prometheus-ai-copilot/install/deploy).
 
-No network devices yet? Layer the network lab on the deployment stack: 30 simulated devices from 13 vendors
-plus a bundled Prometheus, Alertmanager and Grafana:
-
-```bash
-docker compose -f docker-compose.prod.yml -f docker-compose.lab-demo.yml up -d --build
-```
-
-See section 9 of the [deployment guide](docs/DEPLOYMENT.en.md).
-
 ## Features
 
 - **Natural-language queries**: questions become PromQL, validated on Prometheus before running and repaired

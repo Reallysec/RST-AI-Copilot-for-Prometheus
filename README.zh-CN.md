@@ -50,15 +50,6 @@ cd RST-AI-Copilot-for-Prometheus-<版本> && ./deploy.sh
 
 升级、回滚、备份、单点登录和 `.env` 的全部配置项见[安装文档](https://reallysec.com/docs/prometheus-ai-copilot/install/deploy)。
 
-没有网络设备也想先看效果？用网络实验室叠加部署栈，起 30 台模拟设备（13 个厂商）和自带的 Prometheus、
-Alertmanager、Grafana：
-
-```bash
-docker compose -f docker-compose.prod.yml -f docker-compose.lab-demo.yml up -d --build
-```
-
-详见[部署手册](docs/DEPLOYMENT.md)第 9 节。
-
 ## 功能
 
 - **智能查询**：自然语言生成 PromQL，执行前在 Prometheus 上校验，校验失败自动修正；多轮追问，结果出时序图和表格。

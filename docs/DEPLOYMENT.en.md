@@ -14,7 +14,7 @@ For implementers and operators. This is the **authoritative deployment guide**; 
 - **Shape**: Docker only. Three containers: gateway, PostgreSQL (pgvector) and Caddy. The license gates and the
   paid engines are Cython-compiled into the image.
 - **No Prometheus inside**: the gateway connects to the customer's **existing Prometheus and Alertmanager**;
-  Grafana is optional (used for links only). Without a live network, layer the network lab on top (§9).
+  Grafana is optional (used for links only).
 - **Editions**: one bundle. Without activation it runs as the free Community edition (1 user); Professional and
   Enterprise are activated in the UI (§10).
 - **Single replica, built-in login by default**; multiple users and SSO in §13.
@@ -39,7 +39,7 @@ Containers: `rst-ai-copilot-for-prometheus-gateway`, `rst-ai-copilot-for-prometh
 |---|---|
 | OS | x86_64 Linux: Ubuntu 20.04 / 22.04 / 24.04, RHEL / CentOS 8+, Kylin, UOS or any distribution that runs Docker 24+ |
 | Runtime | Docker Engine **24+** and Docker Compose **v2** (the `docker compose` plugin), bash 4+. `deploy.sh` checks both |
-| CPU / memory | 2 vCPU / 4 GB minimum (the gateway container is capped at 2 CPU / 2 GB by default, see `RST_GATEWAY_CPUS` / `RST_GATEWAY_MEM`); 4 vCPU / 8 GB with the network-lab demo |
+| CPU / memory | 2 vCPU / 4 GB minimum (the gateway container is capped at 2 CPU / 2 GB by default, see `RST_GATEWAY_CPUS` / `RST_GATEWAY_MEM`) |
 | Disk | 20 GB+ (images, PostgreSQL data, state) |
 | Prometheus | 2.43 or later, reachable from the gateway host; HTTP API (`/api/v1/*`); Basic / Bearer auth and private CAs are supported |
 | Alertmanager | 0.25 or later with API v2 (read alerts, create / expire silences) |
@@ -213,7 +213,7 @@ curl -k https://copilot.corp.local/readyz      # check db / prometheus
 
   Without it, interface-down alerts fall back to the default policy (non-empty `ifAlias` only), firewalls never
   report "near session capacity" and HA alerts stay silent. The Prometheus in the dev stack (`deploy/dev/prometheus`)
-  and the lab demo (`deploy/lab-demo`) already carries this job.
+  already carries this job.
 - **Alert-rule write-back** (optional): rules the Copilot generates are written, after approval, into its own rule
   file; Prometheus has to load that directory and run with `--web.enable-lifecycle` for hot reloads.
 
@@ -238,34 +238,9 @@ Prometheus data source in that Grafana. Alerts and query results then get "Open 
 
 ---
 
-## 9. Network-lab demo (layered on the deployment stack)
+## 9. (Removed)
 
-For demos, pilots and trainings without live devices, `docker-compose.lab-demo.yml` layers the repository's network
-lab (`lab/`) on the deployment stack: 30 simulated devices (13 vendors plus one standard-MIB device, SNMP served by
-snmpsim), snmp_exporter and blackbox_exporter, plus a Prometheus (loading `lab/prometheus/scrape-*.yml` and the
-product's network rule pack), an Alertmanager (receives, never sends) and a Grafana, with the gateway's data sources
-pointed at them.
-
-```bash
-# In the install directory (or the repository root), after deploy.sh has written .env
-# (leave the data-source questions blank; the overlay fills them in):
-docker compose -f docker-compose.prod.yml -f docker-compose.lab-demo.yml up -d --build
-```
-
-- `--build` is needed once: the snmpsim image is built from `lab/sim`. The overlay needs `lab/` and
-  `app/backend/content/network/rule_pack/`, which are not in the delivery bundle, so demos usually run from a
-  repository checkout.
-- Copilot: `https://<CADDY_SITE_ADDRESS>/v2/`; Grafana: `http://<host>:23000/` (anonymous viewer; change the port
-  with `LAB_DEMO_GRAFANA_PORT` and the browser link with `LAB_DEMO_GRAFANA_URL`).
-- `lab/`'s own `lab-prometheus` and `lab-alertmanager` start as well (host ports 19090 / 19093, change with
-  `LAB_PROMETHEUS_PORT` / `LAB_ALERTMANAGER_PORT`); the gateway does not use them.
-- Fault scenarios (link down, saturation, interface errors, …): `sh lab/scenario.sh on <scenario>`, then
-  `off <scenario>`; see `lab/README.md`.
-- Stop: `docker compose -f docker-compose.prod.yml -f docker-compose.lab-demo.yml down` (add `-v` to drop the data).
-
-On a development machine the dev stack works too:
-`LAB_DIR=./lab docker compose -f docker-compose.yml -f lab/docker-compose.lab.yml up -d --build`; the dev Prometheus
-already loads the lab scrape configuration.
+The former network-lab demo needed the repository's `lab/` directory, which is not in the delivery bundle, so it could not be used on customer hosts. The number is kept because later sections are referenced by number in scripts, the UI and earlier release notes.
 
 ---
 
