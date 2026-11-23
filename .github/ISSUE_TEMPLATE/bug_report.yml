@@ -43,7 +43,7 @@ body:
     attributes:
       label: Version
       description: The `GATEWAY_IMAGE_TAG` value in `.env`, or the tag shown by `docker compose images gateway`.
-      placeholder: "1.2.20"
+      placeholder: "0.2.4"
     validations:
       required: true
 

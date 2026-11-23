@@ -6,6 +6,13 @@ delivery archive is named after.
 
 ---
 
+## 0.2.4 — 2026-11-23
+
+- **Installing an older version works again**: `install.sh --version 0.1.x` failed with a 404, because releases
+  before 0.2.0 are archived under the old name `RST-Prometheus-AI-Copilot-<version>.tar.gz`. The installer now
+  downloads those versions under that name and verifies them against the signed manifest as before;
+  `--download-only` prints the matching directory name.
+
 ## 0.2.3 — 2026-10-12
 
 - **Optical power and BGP sessions**: the snmp_exporter config shipped in `deploy/snmp_exporter/` now reads receive
